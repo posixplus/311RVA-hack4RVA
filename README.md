@@ -4,7 +4,7 @@
 
 **Team - The RVA Transformers**
 
-** Aravindan, Alex, Jayakanthan & Ranga **
+**Aravindan, Alex, Jayakanthan & Ranga**
 
 RVA 311 Bridge extends Richmond's 311 system to provide **24/7 after-hours assistance** through an AI-powered chatbot and IVR phone line. Residents can report issues, find city resources, and get connected to the right department — in **English, Spanish, and Arabic** — without needing an account or sharing personal information.
 
