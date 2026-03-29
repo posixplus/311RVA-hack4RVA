@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RVA 311 Bridge — Frequently Asked Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#004080;--blue:#2563eb;--light-blue:#eff6ff;--green:#166534;--light-green:#f0fdf4;--orange:#c2410c;--light-orange:#fff7ed;--red:#dc2626;--light-red:#fef2f2;--purple:#7c3aed;--light-purple:#f5f3ff;--gray:#6b7280;--light-gray:#f9fafb;--border:#e5e7eb;--text:#1f2937;--bg:#ffffff;}
+body{font-family:'Inter',sans-serif;background:var(--light-gray);color:var(--text);line-height:1.6;}
+
+/* Header */
+.header{background:var(--navy);color:#fff;padding:20px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
+.header-inner{max-width:900px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+.header h1{font-size:22px;font-weight:700;display:flex;align-items:center;gap:10px;}
+.header .badge{background:rgba(255,255,255,0.2);font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;}
+.back-link{color:rgba(255,255,255,0.85);text-decoration:none;font-size:13px;font-weight:500;display:flex;align-items:center;gap:5px;transition:color 0.2s;}
+.back-link:hover{color:#fff;}
+
+/* Disclaimer banner */
+.disclaimer{max-width:900px;margin:20px auto 0;padding:0 24px;}
+.disclaimer-box{background:var(--light-orange);border:1.5px solid #fed7aa;border-radius:10px;padding:14px 18px;font-size:13px;color:#9a3412;display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.disclaimer-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+
+/* Container */
+.container{max-width:900px;margin:0 auto;padding:24px;}
+
+/* Search */
+.search-wrap{margin-bottom:28px;}
+.search-input{width:100%;padding:14px 18px 14px 44px;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-family:'Inter',sans-serif;background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%236b7280' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") no-repeat 14px center;transition:border-color 0.2s,box-shadow 0.2s;}
+.search-input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,0.1);}
+
+/* Category sections */
+.faq-section{margin-bottom:28px;}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border);}
+.section-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.section-title{font-size:17px;font-weight:700;color:var(--navy);}
+.section-count{font-size:11px;background:var(--light-gray);color:var(--gray);padding:2px 8px;border-radius:10px;font-weight:600;}
+
+/* FAQ items */
+.faq-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;transition:box-shadow 0.2s;}
+.faq-item:hover{box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.faq-question{padding:14px 18px;font-weight:600;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none;color:var(--text);}
+.faq-question:hover{color:var(--blue);}
+.faq-arrow{font-size:12px;color:var(--gray);transition:transform 0.2s;flex-shrink:0;}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--blue);}
+.faq-answer{display:none;padding:0 18px 16px;font-size:13.5px;color:#374151;line-height:1.7;border-top:1px solid #f3f4f6;}
+.faq-item.open .faq-answer{display:block;animation:fadeIn 0.2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.faq-answer strong{color:var(--text);}
+.faq-answer ul{margin:8px 0 8px 20px;}
+.faq-answer li{margin-bottom:4px;}
+.faq-answer .phone{color:var(--blue);font-weight:600;}
+.faq-answer .highlight{background:#fef9c3;padding:1px 4px;border-radius:3px;}
+.faq-answer .note{background:var(--light-blue);border-left:3px solid var(--blue);padding:8px 12px;border-radius:0 6px 6px 0;margin-top:8px;font-size:12.5px;}
+
+/* Quick contacts footer */
+.quick-contacts{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:20px 24px;margin-top:32px;}
+.quick-contacts h3{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.contacts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.contact-card{background:var(--light-gray);border-radius:8px;padding:12px;font-size:13px;}
+.contact-card .name{font-weight:600;color:var(--text);margin-bottom:2px;}
+.contact-card .phone-num{color:var(--blue);font-weight:500;}
+.contact-card .desc{color:var(--gray);font-size:12px;}
+
+/* Footer */
+.footer{text-align:center;padding:24px;color:var(--gray);font-size:12px;border-top:1px solid var(--border);margin-top:32px;}
+
+/* Color coding for section icons */
+.bg-blue{background:var(--light-blue);color:var(--blue);}
+.bg-green{background:var(--light-green);color:var(--green);}
+.bg-orange{background:var(--light-orange);color:var(--orange);}
+.bg-red{background:var(--light-red);color:var(--red);}
+.bg-purple{background:var(--light-purple);color:var(--purple);}
+
+@media(max-width:600px){
+  .header h1{font-size:18px;}
+  .contacts-grid{grid-template-columns:1fr;}
+  .container{padding:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>📋 RVA 311 Bridge — FAQs <span class="badge">v1.0</span></h1>
+    <a href="/" class="back-link">← Back to Home</a>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <div class="disclaimer-box">
+    <span class="disclaimer-icon">⚠️</span>
+    <div><strong>Note:</strong> Some responses may be limited as we did not have access to all documentation from Richmond 311 during this hackathon build. Information is based on publicly available documents and may not cover every service or scenario. For complete and authoritative answers, please call <strong>311</strong> during business hours or visit <a href="https://www.rva.gov" style="color:#9a3412;font-weight:600;">rva.gov</a>.</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="search-wrap">
+    <input type="text" class="search-input" placeholder="Search FAQs..." id="searchInput" oninput="filterFAQs()">
+  </div>
+
+  <!-- General -->
+  <div class="faq-section" data-section="general">
+    <div class="section-header">
+      <div class="section-icon bg-blue">🏛️</div>
+      <span class="section-title">General</span>
+      <span class="section-count">5 questions</span>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What is RVA 311 Bridge?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">RVA 311 Bridge is a City of Richmond resource assistant that helps residents submit service requests, find city resources, and get connected to the right department — all in one place. It extends 311 services to <strong>24/7 availability</strong> using an AI-powered assistant backed by verified Richmond city documents. Available in <strong>English, Spanish, and Arabic</strong>.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Who can use this tool?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Any Richmond resident or visitor can use RVA 311 Bridge to report city issues, request services, or get information. <strong>No account is required</strong> to browse or chat — you only need to create an account to track your requests over time.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What languages are supported?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">The platform is available in <strong>English (EN)</strong>, <strong>Spanish (ES)</strong>, and <strong>Arabic (AR)</strong>. You can switch languages at any time using the Language menu in the top navigation bar or sidebar. The AI assistant responds in the selected language.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Is this an official City of Richmond service?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">RVA 311 Bridge is a <strong>prototype developed at Hack4RVA 2026</strong> to demonstrate how AI can extend 311 services after hours. It uses publicly available Richmond city documents but is <strong>not an official City service</strong>. For authoritative information, please call 311 during business hours or visit <a href="https://www.rva.gov" style="color:var(--blue)">rva.gov</a>.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">How does the AI assistant work?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">The assistant uses <strong>Retrieval Augmented Generation (RAG)</strong> to search verified Richmond city documents before answering. It does not make up information — every response is grounded in uploaded documents and cites its sources. If information is not available, it will tell you honestly and suggest contacting the appropriate agency.
+        <div class="note">💡 You'll see numbered source citations below each response so you can verify the information.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submitting Requests -->
+  <div class="faq-section" data-section="requests">
+    <div class="section-header">
+      <div class="section-icon bg-green">📝</div>
+      <span class="section-title">Submitting Service Requests</span>
+      <span class="section-count">5 questions</span>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What types of service requests can I submit?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">You can submit requests across these categories:
+        <ul>
+          <li><strong>Emergency Preparedness</strong> — storm damage, downed trees, traffic signal outages</li>
+          <li><strong>Immigration &amp; Refugee Support</strong> — legal aid, multilingual resources, community partners</li>
+          <li><strong>Business Support Services</strong> — licenses, permits, registration guides</li>
+          <li><strong>Roads, Alleys, Sidewalks &amp; Ramps</strong> — potholes, damaged sidewalks, ADA ramps</li>
+          <li><strong>Lights, Signs &amp; Traffic Signals</strong> — streetlight outages, malfunctioning signals</li>
+          <li><strong>Trees &amp; Vegetation</strong> — planting, trimming, fallen trees on city property</li>
+          <li><strong>Parks &amp; Public Spaces</strong> — park maintenance, playground damage</li>
+          <li><strong>Trash Collection &amp; Cleanup</strong> — missed collections, street cleaning</li>
+          <li><strong>Housing &amp; Rental Assistance</strong> — RRHA, emergency housing, eviction help</li>
+          <li><strong>Food &amp; Nutrition Assistance</strong> — SNAP, food pantries, meal delivery</li>
+          <li><strong>Healthcare &amp; Mental Health</strong> — clinics, crisis support, Medicaid</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">How do I submit a service request?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Click a category from the home screen, then chat with the AI assistant about your issue. You can also follow the four-step form: <strong>What</strong> (category) → <strong>Where</strong> (location) → <strong>Why</strong> (description) → <strong>Who</strong> (contact info). You can submit without an account, but creating one lets you track your request.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What happens after I submit a request?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Your request is logged and assigned a unique <strong>Session ID</strong>. The status will show as <strong>ACTIVE</strong> while being reviewed, <strong>COMPLETED</strong> when resolved, or <strong>HANDED OFF</strong> if it has been referred to a partner nonprofit or city department.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Can I submit a request in Spanish or Arabic?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Yes. Switch to your preferred language using the Language toggle before starting a chat, and the assistant will respond in that language. Your request will be recorded in the language you used.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What does "Handed Off" mean?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer"><strong>Handed Off</strong> means your session has been forwarded to a partner agency — such as IRC Richmond, ReEstablish Richmond, Sacred Heart Center, Central Virginia Legal Aid, or another nonprofit — that is better equipped to help with your specific need. You may be contacted directly by that organization.</div>
+    </div>
+  </div>
+
+  <!-- Emergency -->
+  <div class="faq-section" data-section="emergency">
+    <div class="section-header">
+      <div class="section-icon bg-red">🚨</div>
+      <span class="section-title">Emergency &amp; Non-Emergency Issues</span>
+      <span class="section-count">4 questions</span>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What should I do in a life-threatening emergency?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer"><strong>Call 911 immediately.</strong> RVA 311 Bridge is for non-emergency service requests and information only. Do not rely on this tool in an emergency.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Who do I call for non-emergency police matters?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">For non-emergency police situations — such as reporting downed trees blocking roads or storm damage — call the Richmond non-emergency police line at <span class="phone">804-646-5100</span>.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What if my issue is urgent but not an emergency?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Use the <strong>Emergency Preparedness</strong> category to flag urgent non-emergency issues like storm damage, road hazards, or freezing weather safety questions. City staff monitor these requests and prioritize accordingly. For example: <em>"I have a question about freezing weather safety and shelter locations"</em> or <em>"Can I use a stove to heat my home?"</em></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What crisis hotlines are available 24/7?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">
+        <ul>
+          <li><strong>Emergency:</strong> <span class="phone">911</span></li>
+          <li><strong>Richmond BHA Crisis Line:</strong> <span class="phone">804-819-4100</span> (24/7)</li>
+          <li><strong>National Crisis Line:</strong> <span class="phone">988</span></li>
+          <li><strong>Immigration Emergency:</strong> <span class="phone">1-855-HELP-MY-FAMILY (1-855-435-7693)</span></li>
+          <li><strong>Domestic Violence Hotline:</strong> <span class="phone">800-799-7233</span></li>
+          <li><strong>Human Trafficking Hotline:</strong> <span class="phone">888-373-7888</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Immigrant & Refugee -->
+  <div class="faq-section" data-section="immigrant">
+    <div class="section-header">
+      <div class="section-icon bg-purple">🌍</div>
+      <span class="section-title">Immigrant &amp; Refugee Services</span>
+      <span class="section-count">4 questions</span>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Where can I get temporary housing or shelter assistance?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">For temporary housing, contact:
+        <ul>
+          <li><strong>RRHA (Richmond Redevelopment &amp; Housing Authority):</strong> <span class="phone">804-780-4200</span></li>
+          <li><strong>Dept. of Social Services Emergency Assistance:</strong> <span class="phone">804-646-7201</span> (900 E Marshall St)</li>
+          <li><strong>IRC Richmond:</strong> Refugee-specific housing assistance</li>
+          <li><strong>ReEstablish Richmond:</strong> Assistance for refugees and immigrants</li>
+        </ul>
+        You can also use the <strong>Hand Off</strong> button in the chat to connect your case directly to one of these partner organizations.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Do I need to share my immigration status to use this tool?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer"><strong>No.</strong> RVA 311 Bridge does not collect or store immigration status, and you are never asked for it. The tool is designed with privacy-first principles — no PII (personally identifiable information) is collected or stored. All residents can access services regardless of immigration status.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What if I need legal help with an immigration issue?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Contact <strong>Central Virginia Legal Aid Society</strong> at <span class="phone">804-648-1012</span> for free legal help. For 24/7 immigration emergency support, call <span class="phone">1-855-HELP-MY-FAMILY (1-855-435-7693)</span>. You can also visit <a href="https://immigrantjustice.org/for-immigrants" style="color:var(--blue)">immigrantjustice.org</a> for additional resources.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What are my rights if I encounter ICE or CBP officers?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">
+        <ul>
+          <li><strong>Stay calm</strong> — do not run, argue, or resist</li>
+          <li>You have the <strong>right to remain silent</strong></li>
+          <li><strong>Do NOT open your door</strong> — officers need a warrant <em>signed by a judge</em> to enter</li>
+          <li>ICE administrative forms are <strong>NOT</strong> judge-signed warrants</li>
+          <li>Ask: <em>"Are you from ICE or CBP?"</em></li>
+        </ul>
+        <div class="note">📞 For 24/7 emergency support: <strong>1-855-HELP-MY-FAMILY</strong> | Richmond Legal Aid: <strong>804-648-1012</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Business -->
+  <div class="faq-section" data-section="business">
+    <div class="section-header">
+      <div class="section-icon bg-orange">💼</div>
+      <span class="section-title">Business Support Services</span>
+      <span class="section-count">2 questions</span>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">I want to start a business in Richmond. Where do I begin?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Use the <strong>Business Support Services</strong> category on the home screen. It opens a self-guided webpage (RVA BizNavigator) that walks you through business registration, permits, licensing, zoning requirements, and local resources — all specific to your business type, location, and industry. This feature is <strong>online only</strong> (not available via phone).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Can I get business support over the phone?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">The Business Support Services tool is currently <strong>online only</strong>. For phone-based business assistance, contact the <strong>City of Richmond Department of Economic Development</strong> or call <strong>311</strong> during business hours for referrals.</div>
+    </div>
+  </div>
+
+  <!-- Privacy -->
+  <div class="faq-section" data-section="privacy">
+    <div class="section-header">
+      <div class="section-icon bg-green">🔒</div>
+      <span class="section-title">Privacy &amp; Data</span>
+      <span class="section-count">4 questions</span>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Is my personal information kept private?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Yes. RVA 311 Bridge is designed with <strong>privacy-first principles</strong>. No personally identifiable information (PII) is collected or stored. Chat conversations are processed with automatic PII redaction using AWS Comprehend before any data is logged. The public dashboard only shows anonymized, aggregate data.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Will my request be visible to others?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">The Service Requests Dashboard shows <strong>aggregate anonymized data</strong> only (category counts, language distribution, etc.). Individual conversations are private and are not displayed publicly. Only authorized administrators can view session details.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">What data is collected during a chat?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">The system logs: category selected, language used, message count, and session timestamps. <strong>All message content is PII-redacted</strong> before storage. No names, addresses, phone numbers, or immigration status are stored. Sessions expire automatically after 7 days.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Can I use this tool anonymously?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer"><strong>Yes.</strong> No login, account, or personal information is required to use the chat assistant. You can browse categories and ask questions completely anonymously.</div>
+    </div>
+  </div>
+
+  <!-- Tracking -->
+  <div class="faq-section" data-section="tracking">
+    <div class="section-header">
+      <div class="section-icon bg-blue">📊</div>
+      <span class="section-title">Tracking &amp; Account</span>
+      <span class="section-count">3 questions</span>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Do I need an account to submit a request?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">No. You can chat and get assistance without signing in. However, creating a free account lets you view your request history and receive status updates via email.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">How do I check the status of my request?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Visit the <strong>Dashboard</strong> page from the sidebar. The public dashboard shows all sessions in anonymized form. If you have admin access, you can view full session details using the admin password.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">Can I get a summary of my conversation sent to me?<span class="faq-arrow">▼</span></div>
+      <div class="faq-answer">Yes. At the end of a conversation, you can request a summary to be delivered to your email address. This is optional and your email is only used for delivery — it is not stored permanently.</div>
+    </div>
+  </div>
+
+  <!-- Quick Contacts -->
+  <div class="quick-contacts">
+    <h3>📞 Quick Contact Numbers</h3>
+    <div class="contacts-grid">
+      <div class="contact-card">
+        <div class="name">Emergency</div>
+        <div class="phone-num">911</div>
+        <div class="desc">Life-threatening emergencies only</div>
+      </div>
+      <div class="contact-card">
+        <div class="name">Richmond 311</div>
+        <div class="phone-num">311</div>
+        <div class="desc">City services during business hours</div>
+      </div>
+      <div class="contact-card">
+        <div class="name">Non-Emergency Police</div>
+        <div class="phone-num">804-646-5100</div>
+        <div class="desc">Storm damage, road hazards</div>
+      </div>
+      <div class="contact-card">
+        <div class="name">Richmond BHA Crisis</div>
+        <div class="phone-num">804-819-4100</div>
+        <div class="desc">24/7 mental health crisis line</div>
+      </div>
+      <div class="contact-card">
+        <div class="name">Central VA Legal Aid</div>
+        <div class="phone-num">804-648-1012</div>
+        <div class="desc">Free legal help for low-income residents</div>
+      </div>
+      <div class="contact-card">
+        <div class="name">Immigration Emergency</div>
+        <div class="phone-num">1-855-435-7693</div>
+        <div class="desc">24/7 — 1-855-HELP-MY-FAMILY</div>
+      </div>
+      <div class="contact-card">
+        <div class="name">Central VA Foodbank</div>
+        <div class="phone-num">804-521-2500</div>
+        <div class="desc">Food assistance for all residents</div>
+      </div>
+      <div class="contact-card">
+        <div class="name">CrossOver Healthcare</div>
+        <div class="phone-num">804-655-4800</div>
+        <div class="desc">Free primary care, culturally sensitive</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    RVA 311 Bridge — Hack4RVA 2026 · Thriving &amp; Inclusive Communities Pillar<br>
+    Built with ❤️ for Richmond residents · Powered by Amazon Bedrock &amp; AWS
+  </div>
+</div>
+
+<script>
+function toggleFAQ(el){
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  // Close all in same section
+  item.parentElement.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+function filterFAQs(){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = text.includes(q) ? '' : 'none';
+  });
+  document.querySelectorAll('.faq-section').forEach(section => {
+    const visible = section.querySelectorAll('.faq-item[style=""], .faq-item:not([style])');
+    section.style.display = visible.length > 0 ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

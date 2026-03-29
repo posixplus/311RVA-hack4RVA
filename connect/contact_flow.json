@@ -1,0 +1,237 @@
+{
+  "Version": "2019-10-30",
+  "Description": "Richmond City 24/7 Resource Assistant Contact Flow",
+  "StartAction": "12345678-1234-1234-1234-123456789012",
+  "Metadata": {
+    "entryPointPosition": {
+      "x": 100,
+      "y": 50
+    },
+    "snapToGrid": false,
+    "canvas": {
+      "zoom": 100
+    }
+  },
+  "Actions": [
+    {
+      "Identifier": "12345678-1234-1234-1234-123456789012",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Thank you for calling the Richmond City 24-7 Resource Assistant. I can help you find housing, food, healthcare, and other community resources."
+      },
+      "Transitions": {
+        "NextAction": "23456789-1234-1234-1234-123456789013",
+        "Errors": [],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "23456789-1234-1234-1234-123456789013",
+      "Type": "SetContactAttributes",
+      "Parameters": {
+        "Attributes": {
+          "InteractionCount": "0"
+        }
+      },
+      "Transitions": {
+        "NextAction": "34567890-1234-1234-1234-123456789014",
+        "Errors": [],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "34567890-1234-1234-1234-123456789014",
+      "Type": "GetParticipantInput",
+      "Parameters": {
+        "Text": "What type of assistance do you need today?",
+        "TextToSpeechVoice": "Joanna",
+        "InputType": "Voice",
+        "Timeout": 8,
+        "MaxSpeechTime": 15,
+        "Grammar": "default"
+      },
+      "Transitions": {
+        "NextAction": "45678901-1234-1234-1234-123456789015",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "56789012-1234-1234-1234-123456789016"
+          },
+          {
+            "ErrorType": "TimeoutError",
+            "NextAction": "56789012-1234-1234-1234-123456789016"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "45678901-1234-1234-1234-123456789015",
+      "Type": "InvokeLambdaFunction",
+      "Parameters": {
+        "LambdaFunctionArn": "LAMBDA_ARN_PLACEHOLDER",
+        "InvocationTimeLimitSeconds": 8,
+        "ResponseValidation": {
+          "ResponseType": "Json"
+        }
+      },
+      "Transitions": {
+        "NextAction": "67890123-1234-1234-1234-123456789017",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "78901234-1234-1234-1234-123456789018"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "56789012-1234-1234-1234-123456789016",
+      "Type": "GetParticipantInput",
+      "Parameters": {
+        "Text": "I didn't catch that. Please repeat what type of assistance you need.",
+        "TextToSpeechVoice": "Joanna",
+        "InputType": "Voice",
+        "Timeout": 8,
+        "MaxSpeechTime": 15,
+        "Grammar": "default"
+      },
+      "Transitions": {
+        "NextAction": "45678901-1234-1234-1234-123456789015",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "78901234-1234-1234-1234-123456789018"
+          },
+          {
+            "ErrorType": "TimeoutError",
+            "NextAction": "78901234-1234-1234-1234-123456789018"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "67890123-1234-1234-1234-123456789017",
+      "Type": "SetContactAttributes",
+      "Parameters": {
+        "Attributes": {
+          "lastResponse": "$.External.ResponsePayload.response"
+        }
+      },
+      "Transitions": {
+        "NextAction": "89012345-1234-1234-1234-123456789019",
+        "Errors": [],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "78901234-1234-1234-1234-123456789018",
+      "Type": "SetContactAttributes",
+      "Parameters": {
+        "Attributes": {
+          "lastResponse": "I can help connect you with Richmond City resources including housing assistance, food banks, healthcare services, legal aid, utility assistance, job training, and mental health support. Please call back and let us know which service you need."
+        }
+      },
+      "Transitions": {
+        "NextAction": "89012345-1234-1234-1234-123456789019",
+        "Errors": [],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "89012345-1234-1234-1234-123456789019",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "$.Contact.Attributes.lastResponse"
+      },
+      "Transitions": {
+        "NextAction": "90123456-1234-1234-1234-123456789020",
+        "Errors": [],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "90123456-1234-1234-1234-123456789020",
+      "Type": "GetParticipantInput",
+      "Parameters": {
+        "Text": "Is there anything else I can help you with today? Say yes to continue or hang up to end.",
+        "TextToSpeechVoice": "Joanna",
+        "InputType": "Voice",
+        "Timeout": 8,
+        "MaxSpeechTime": 15,
+        "Grammar": "default"
+      },
+      "Transitions": {
+        "NextAction": "01234567-1234-1234-1234-123456789021",
+        "Errors": [
+          {
+            "ErrorType": "NoMatchingError",
+            "NextAction": "11234567-1234-1234-1234-123456789022"
+          },
+          {
+            "ErrorType": "TimeoutError",
+            "NextAction": "11234567-1234-1234-1234-123456789022"
+          }
+        ],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "01234567-1234-1234-1234-123456789021",
+      "Type": "CheckRoutingAttributes",
+      "Parameters": {
+        "Attributes": []
+      },
+      "Transitions": {
+        "NextAction": "34567890-1234-1234-1234-123456789014",
+        "Errors": [],
+        "Conditions": [
+          {
+            "Condition": {
+              "StringEquals": [
+                "$.Attributes.UTUserInput",
+                "yes"
+              ]
+            },
+            "NextAction": "34567890-1234-1234-1234-123456789014",
+            "Assertions": []
+          },
+          {
+            "Condition": {
+              "StringEquals": [
+                "$.Attributes.UTUserInput",
+                "no"
+              ]
+            },
+            "NextAction": "11234567-1234-1234-1234-123456789022",
+            "Assertions": []
+          }
+        ]
+      }
+    },
+    {
+      "Identifier": "11234567-1234-1234-1234-123456789022",
+      "Type": "MessageParticipant",
+      "Parameters": {
+        "Text": "Thank you for calling. A summary has been shared with local community organizations who may be able to help. Goodbye."
+      },
+      "Transitions": {
+        "NextAction": "21234567-1234-1234-1234-123456789023",
+        "Errors": [],
+        "Conditions": []
+      }
+    },
+    {
+      "Identifier": "21234567-1234-1234-1234-123456789023",
+      "Type": "DisconnectParticipant",
+      "Parameters": {},
+      "Transitions": {
+        "NextAction": null,
+        "Errors": [],
+        "Conditions": []
+      }
+    }
+  ]
+}

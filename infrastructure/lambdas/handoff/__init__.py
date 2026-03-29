@@ -1,0 +1,1 @@
+"""Handoff Lambda module"""

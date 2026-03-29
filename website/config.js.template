@@ -1,0 +1,14 @@
+// Copy this file to config.js and fill in your values after running: cdk deploy RichmondApi
+// Then open index.html in your browser
+
+window.RICHMOND_CONFIG = {
+    // API Gateway URL from CDK output "RichmondApiUrl"
+    // Example: "https://abc123.execute-api.us-east-1.amazonaws.com/prod"
+    API_ENDPOINT: "YOUR_API_GATEWAY_URL_HERE",
+    
+    // Set to false to disable text-to-speech responses
+    SPEAK_RESPONSES: true,
+    
+    // Connect phone number from CDK output "ConnectPhoneNumber"  
+    CONNECT_PHONE: "YOUR_CONNECT_PHONE_NUMBER"
+};

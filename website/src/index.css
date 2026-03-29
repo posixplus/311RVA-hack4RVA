@@ -1,0 +1,16 @@
+:root {
+  --blue: #003087;
+  --blue-light: #004db3;
+  --gold: #B8972A;
+  --gold-light: #d4aa30;
+  --gray-bg: #f4f6f9;
+  --gray-border: #e0e4ea;
+  --text-primary: #1a1a2e;
+  --text-secondary: #555;
+  --white: #ffffff;
+  --success: #2e7d32;
+  --error: #c62828;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--gray-bg); color: var(--text-primary); min-height: 100vh; }

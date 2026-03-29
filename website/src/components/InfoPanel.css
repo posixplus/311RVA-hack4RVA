@@ -1,0 +1,18 @@
+.info-panel { display: flex; flex-direction: column; gap: 16px; }
+.info-card { background: var(--white); border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid var(--gray-border); }
+.info-available { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--success); font-size: 0.9rem; }
+.dot-green { width: 10px; height: 10px; background: #4caf50; border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.7;transform:scale(1.2)} }
+.info-card-title { font-size: 0.85rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+.step { display: flex; gap: 12px; margin-bottom: 12px; }
+.step:last-child { margin-bottom: 0; }
+.step-num { background: var(--blue); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.step strong { font-size: 0.9rem; display: block; margin-bottom: 2px; }
+.step p { font-size: 0.8rem; color: var(--text-secondary); }
+.call-card { background: var(--blue); color: white; text-align: center; }
+.call-card .info-card-title { color: rgba(255,255,255,0.8); }
+.call-number { font-size: 1.5rem; font-weight: 700; color: var(--gold-light); margin: 8px 0 4px; letter-spacing: 1px; }
+.call-note { font-size: 0.75rem; opacity: 0.7; }
+.resource-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.resource-list li { font-size: 0.82rem; display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+.lang-card { background: #e8f0fe; border-color: #c5d7f7; text-align: center; font-size: 0.85rem; color: var(--blue); font-weight: 500; }

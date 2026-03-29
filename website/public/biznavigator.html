@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RVA BizNavigator -- Richmond, VA Business Navigator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* &#9472;&#9472; RVA.GOV THEME VARIABLES &#9472;&#9472; */
+:root {
+  --navy:    #15457B;
+  --navy-dk: #09315B;
+  --red:     #A6282E;
+  --yellow:  #FFE751;
+  --white:   #FFFFFF;
+  --light:   #F1F1F1;
+  --border:  #D3D3D3;
+  --text:    #1A1A1A;
+  --muted:   #5A5A6A;
+  --footer:  #2A2937;
+  --tl:      #15457B;
+  --sp:      #A6282E;
+  --or:      #C47A00;
+  --dark:    #09315B;
+  --radius:  6px;
+  --radius-lg: 10px;
+  --shadow:  0 2px 8px rgba(0,0,0,.10);
+  --shadow-md:0 4px 16px rgba(0,0,0,.13);
+}
+
+/* &#9472;&#9472; RESET &#9472;&#9472; */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Nunito Sans',Arial,sans-serif;
+  background:var(--light);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.6;
+}
+
+/* &#9472;&#9472; TOPBAR &#9472;&#9472; */
+.topbar{
+  background:var(--navy);
+  border-bottom:4px solid var(--red);
+  position:sticky;top:0;z-index:1000;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+.topbar-inner{
+  max-width:1140px;margin:0 auto;
+  display:flex;align-items:center;
+  padding:0 20px;height:64px;gap:16px;
+}
+.site-wordmark{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;flex-shrink:0;
+}
+.site-wordmark .seal{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;border:2px solid rgba(255,255,255,.3);
+}
+.site-wordmark .wordmark-text{
+  line-height:1.1;
+}
+.site-wordmark .wordmark-top{
+  font-size:9px;color:rgba(255,255,255,.75);letter-spacing:2px;
+  text-transform:uppercase;font-weight:600;display:block;
+}
+.site-wordmark .wordmark-city{
+  font-size:17px;color:#fff;font-weight:800;letter-spacing:.5px;
+  text-transform:uppercase;display:block;
+}
+.app-badge{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:4px;padding:3px 10px;
+  font-size:11px;color:#fff;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;
+  margin-left:4px;
+}
+.topnav{
+  display:flex;align-items:center;gap:4px;margin-left:auto;
+}
+.nb{
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.82);
+  font-family:'Nunito Sans',Arial,sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.3px;
+  text-transform:uppercase;
+  padding:8px 13px;border-radius:4px;
+  transition:background .15s,color .15s;
+  white-space:nowrap;
+}
+.nb:hover{background:rgba(255,255,255,.14);color:#fff;}
+.nb.on{background:var(--red);color:#fff;}
+.lang-grp{
+  display:flex;align-items:center;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:4px;overflow:hidden;margin-left:8px;
+}
+.lb{
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.7);
+  font-family:'Nunito Sans',Arial,sans-serif;
+  font-size:11px;font-weight:800;letter-spacing:1px;
+  padding:5px 10px;transition:background .15s,color .15s;
+}
+.lb.on{background:var(--yellow);color:var(--navy);}
+
+/* &#9472;&#9472; SCREENS &#9472;&#9472; */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* &#9472;&#9472; PAGE CONTENT WRAPPER &#9472;&#9472; */
+.conw{max-width:1100px;margin:0 auto;padding:0 20px 40px;}
+
+/* &#9472;&#9472; PAGE HEADER BAND (Opportunities, Dashboard, Resources) &#9472;&#9472; */
+.res-page-hdr{
+  background:var(--navy);
+  padding:32px 20px 28px;
+  border-bottom:4px solid var(--red);
+  margin-bottom:0;
+}
+.res-page-hdr .slbl{
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:rgba(255,255,255,.65);
+  margin-bottom:4px;
+}
+.res-page-hdr .stit{
+  font-size:28px;font-weight:800;color:#fff;line-height:1.2;
+  margin-bottom:6px;
+}
+.res-page-hdr p{color:rgba(255,255,255,.75);font-size:14px;line-height:1.7;max-width:680px;}
+
+/* &#9472;&#9472; HOME HERO &#9472;&#9472; */
+.hero{
+  background:var(--navy);
+  border-bottom:4px solid var(--red);
+  padding:52px 20px 48px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;}
+.hero-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.6);
+  margin-bottom:10px;display:flex;align-items:center;gap:8px;
+}
+.hero-eyebrow::before{
+  content:'';display:inline-block;width:24px;height:2px;
+  background:var(--yellow);
+}
+.hero h1{
+  font-size:40px;font-weight:900;color:#fff;line-height:1.15;
+  margin-bottom:16px;max-width:680px;
+}
+.hero h1 em{color:var(--yellow);font-style:normal;}
+.hero-sub{
+  font-size:16px;color:rgba(255,255,255,.8);
+  max-width:560px;line-height:1.7;margin-bottom:28px;
+}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* &#9472;&#9472; BUTTONS &#9472;&#9472; */
+.btn-yellow{
+  background:var(--yellow);color:var(--navy);
+  border:none;border-radius:var(--radius);
+  padding:13px 28px;font-size:14px;font-weight:800;
+  cursor:pointer;font-family:'Nunito Sans',Arial,sans-serif;
+  text-transform:uppercase;letter-spacing:.5px;
+  transition:background .15s,transform .1s;
+  text-decoration:none;display:inline-block;
+}
+.btn-yellow:hover{background:#f0d800;transform:translateY(-1px);}
+.btn-navy{
+  background:var(--navy);color:#fff;
+  border:2px solid rgba(255,255,255,.3);border-radius:var(--radius);
+  padding:11px 24px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:'Nunito Sans',Arial,sans-serif;
+  text-transform:uppercase;letter-spacing:.5px;
+  transition:background .15s;
+  text-decoration:none;display:inline-block;
+}
+.btn-navy:hover{background:var(--navy-dk);}
+.btn-outline{
+  background:transparent;color:var(--navy);
+  border:2px solid var(--navy);border-radius:var(--radius);
+  padding:9px 20px;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:'Nunito Sans',Arial,sans-serif;
+  transition:all .15s;text-decoration:none;display:inline-block;
+}
+.btn-outline:hover{background:var(--navy);color:#fff;}
+.btn-red{
+  background:var(--red);color:#fff;
+  border:none;border-radius:var(--radius);
+  padding:10px 20px;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:'Nunito Sans',Arial,sans-serif;
+  transition:background .15s;
+}
+.btn-red:hover{background:#8b2025;}
+.btn-g{background:none;border:none;color:var(--navy);font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito Sans',Arial,sans-serif;padding:8px 0;text-decoration:underline;}
+.btn-p{
+  background:var(--yellow);color:var(--navy);
+  border:none;border-radius:var(--radius);
+  padding:11px 24px;font-size:14px;font-weight:800;
+  cursor:pointer;font-family:'Nunito Sans',Arial,sans-serif;
+  letter-spacing:.3px;transition:background .15s;
+}
+.btn-p:hover{background:#f0d800;}
+
+/* &#9472;&#9472; HOME: 4-PHASE OVERVIEW &#9472;&#9472; */
+.poc-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);overflow:hidden;
+  box-shadow:var(--shadow);margin:32px 0;
+}
+.poc{
+  padding:24px 20px;border-right:1px solid var(--border);
+  position:relative;
+}
+.poc:last-child{border-right:none;}
+.poc-num{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:900;color:#fff;
+  margin-bottom:12px;
+}
+.poc-num.p1{background:var(--navy);}
+.poc-num.p2{background:var(--red);}
+.poc-num.p3{background:#C47A00;}
+.poc-num.p4{background:#2E7D32;}
+.poc h3{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px;}
+.poc p{font-size:12px;color:var(--muted);line-height:1.5;}
+.poc-icon{font-size:20px;margin-bottom:8px;}
+
+/* &#9472;&#9472; QUIZ &#9472;&#9472; */
+.qwrap{max-width:680px;margin:0 auto;padding:40px 20px;}
+.qcard{
+  background:#fff;border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);padding:36px 32px;
+  border:1px solid var(--border);
+  border-top:4px solid var(--navy);
+}
+.qprog{display:flex;gap:6px;margin-bottom:24px;}
+.qpd{
+  height:4px;flex:1;background:var(--border);
+  border-radius:2px;transition:background .3s;
+}
+.qpd.on{background:var(--navy);}
+.qpd.dn{background:var(--red);}
+.qq{
+  font-size:22px;font-weight:800;color:var(--navy);
+  margin-bottom:8px;line-height:1.3;
+}
+.qh{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6;}
+.og{display:flex;flex-direction:column;gap:10px;}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 18px;border-radius:var(--radius);
+  border:2px solid var(--border);background:#fff;
+  cursor:pointer;transition:all .15s;
+}
+.opt:hover{border-color:var(--navy);background:#EFF4FB;}
+.opt.sel{border-color:var(--navy);background:#EFF4FB;box-shadow:0 0 0 3px rgba(21,69,123,.15);}
+.oi{font-size:26px;flex-shrink:0;width:36px;text-align:center;}
+.ol{font-size:15px;font-weight:700;color:var(--navy);}
+.od{font-size:12px;color:var(--muted);margin-top:2px;}
+.qnav{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:28px;padding-top:20px;border-top:1px solid var(--border);
+}
+
+/* &#9472;&#9472; CHECKLIST &#9472;&#9472; */
+.cl-hdr{
+  background:var(--navy);
+  padding:28px 20px 24px;
+  border-bottom:4px solid var(--red);
+}
+.cl-hdr-inner{max-width:1100px;margin:0 auto;}
+.rt-tit-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;}
+.rt-tit{font-size:22px;font-weight:900;color:#fff;margin-bottom:8px;}
+.rt-sub{font-size:13px;color:rgba(255,255,255,.75);margin-bottom:12px;line-height:1.5;}
+.rbdg{
+  display:inline-block;background:rgba(255,255,255,.15);
+  color:#fff;border-radius:3px;padding:3px 10px;
+  font-size:11px;font-weight:700;margin-right:5px;margin-bottom:4px;
+  text-transform:uppercase;letter-spacing:.3px;
+}
+.prw{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:14px 20px;
+}
+.prw-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.prl{font-size:12px;font-weight:700;color:var(--navy);white-space:nowrap;}
+.prb{flex:1;min-width:120px;background:var(--light);border-radius:99px;height:8px;overflow:hidden;}
+.prf{height:100%;background:var(--red);border-radius:99px;transition:width .4s;}
+.cl-body-wrap{max-width:1100px;margin:0 auto;padding:28px 20px;}
+
+/* &#9472;&#9472; PHASE BLOCK &#9472;&#9472; */
+.phb{background:#fff;border-radius:var(--radius-lg);border:1px solid var(--border);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow);}
+.phh{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 20px;background:var(--light);
+  border-bottom:1px solid var(--border);
+}
+.phn{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:900;color:#fff;flex-shrink:0;
+}
+.phn.p1{background:var(--navy);}
+.phn.p2{background:var(--red);}
+.phn.p3{background:#C47A00;}
+.phn.p4{background:#2E7D32;}
+.phtw strong{font-size:15px;font-weight:800;color:var(--navy);display:block;}
+.phtw span{font-size:12px;color:var(--muted);}
+.wbox{
+  margin:14px 16px 4px;padding:10px 14px;
+  background:#FFF8E1;border:1px solid #FFE082;
+  border-radius:var(--radius);font-size:12px;color:#6D4C00;
+}
+.dnote-blue{
+  display:flex;gap:10px;align-items:flex-start;
+  margin:14px 16px 4px;padding:10px 14px;
+  background:#EFF4FB;border:1px solid #BFCFE8;
+  border-radius:var(--radius);font-size:12px;color:var(--navy);
+}
+
+/* &#9472;&#9472; TASK &#9472;&#9472; */
+.task{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 20px;border-bottom:1px solid var(--light);
+  cursor:pointer;transition:background .12s;
+}
+.task:hover{background:#F7FAFE;}
+.task:last-child{border-bottom:none;}
+.tchk{
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid var(--border);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:2px;transition:all .15s;background:#fff;
+}
+.task.dk .tchk{background:var(--navy);border-color:var(--navy);}
+.tsvg{display:none;}
+.task.dk .tsvg{display:block;}
+.tbody{flex:1;min-width:0;}
+.tn{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.task.dk .tn{text-decoration:line-through;color:var(--muted);}
+.td{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
+.tft{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.tl{
+  display:inline-block;font-size:12px;font-weight:700;
+  color:var(--navy);text-decoration:none;
+  border-bottom:1px solid var(--navy);padding-bottom:1px;
+}
+.tl:hover{color:var(--red);border-color:var(--red);}
+.tl.blue{color:var(--navy);}
+.tc{font-size:11px;color:var(--muted);font-weight:600;}
+.tbdg{
+  background:var(--light);border:1px solid var(--border);
+  border-radius:3px;padding:4px 10px;font-size:11px;
+  color:var(--muted);font-weight:600;flex-shrink:0;white-space:nowrap;
+  align-self:flex-start;
+}
+
+/* &#9472;&#9472; COST / TIMELINE &#9472;&#9472; */
+.cb{padding:20px 20px 16px;border-bottom:1px solid var(--light);}
+.cb h3{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;}
+.ctbl{width:100%;border-collapse:collapse;font-size:12px;}
+.ctbl tr{border-bottom:1px solid var(--light);}
+.ctbl td{padding:7px 8px;}
+.cn{color:var(--text);font-weight:600;}
+.cd{color:var(--muted);white-space:nowrap;}
+.ca{color:var(--navy);font-weight:700;text-align:right;white-space:nowrap;}
+.ctot{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:12px;padding:12px 14px;
+  background:var(--navy);border-radius:var(--radius);color:#fff;
+}
+.ctot-l{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;opacity:.75;}
+.ctot-d{font-size:11px;opacity:.7;margin-top:2px;}
+.ctot-v{font-size:24px;font-weight:900;}
+
+/* &#9472;&#9472; TIMELINE &#9472;&#9472; */
+.tlw{padding:20px 20px 16px;border-bottom:1px solid var(--light);}
+.tlw h3{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:14px;text-transform:uppercase;letter-spacing:.4px;}
+.tlt{position:relative;padding:10px 0 0;}
+.tll{position:absolute;top:22px;left:0;right:0;height:2px;background:var(--border);}
+.tls{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;position:relative;}
+.tlst{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;min-width:64px;
+}
+.tld{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;
+  flex-shrink:0;position:relative;z-index:1;
+  border:3px solid #fff;
+}
+.tld.ph1{background:var(--navy);}
+.tld.ph2{background:var(--red);}
+.tld.ph3{background:#C47A00;}
+.tld.ph4{background:#2E7D32;}
+.tldday{font-size:9px;color:var(--muted);font-weight:600;white-space:nowrap;}
+.tldname{font-size:9px;color:var(--text);font-weight:700;text-align:center;line-height:1.2;max-width:60px;}
+.tldet{
+  display:none;margin-top:12px;padding:12px 16px;
+  background:var(--navy);color:#fff;border-radius:var(--radius);
+  font-size:12px;line-height:1.6;
+}
+.tldet.show{display:block;}
+
+/* &#9472;&#9472; DEPT GRID &#9472;&#9472; */
+.slbl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;}
+.dc{
+  display:block;text-decoration:none;
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px 14px;
+  text-align:center;transition:all .15s;
+  border-top:3px solid var(--navy);
+}
+.dc:hover{border-top-color:var(--red);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.di{font-size:22px;margin-bottom:6px;}
+.dn2{font-size:12px;font-weight:700;color:var(--navy);line-height:1.3;}
+.du{font-size:10px;color:var(--muted);margin-top:4px;}
+
+/* &#9472;&#9472; SUPPORT PANEL &#9472;&#9472; */
+.supanel{
+  background:var(--navy);border-radius:var(--radius-lg);
+  padding:24px 22px;margin-top:24px;
+}
+.supanel .sugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
+.sub{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--radius);padding:14px 16px;
+  cursor:pointer;text-align:left;
+  font-family:'Nunito Sans',Arial,sans-serif;
+  transition:background .15s;
+}
+.sub:hover{background:rgba(255,255,255,.18);}
+.sub strong{display:block;font-size:13px;color:#fff;font-weight:700;margin-bottom:3px;}
+.sub small{font-size:11px;color:rgba(255,255,255,.65);}
+
+/* &#9472;&#9472; OPPORTUNITIES &#9472;&#9472; */
+.opp-tab{
+  background:none;border:none;padding:12px 20px;
+  cursor:pointer;font-family:'Nunito Sans',Arial,sans-serif;
+  font-size:13px;font-weight:700;color:var(--muted);
+  border-bottom:3px solid transparent;transition:all .15s;
+  text-transform:uppercase;letter-spacing:.3px;
+}
+.opp-tab:hover{color:var(--navy);}
+.opp-tab.on{color:var(--navy);border-bottom-color:var(--navy);}
+.opp-panel{display:none;}
+.opp-panel:first-of-type,.opp-panel[style*="block"]{display:block;}
+.kc{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:20px 22px;
+  border-top:3px solid var(--navy);
+}
+.kv{font-size:30px;font-weight:900;color:var(--navy);}
+.kl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:2px;}
+
+/* &#9472;&#9472; DASHBOARD &#9472;&#9472; */
+.dkpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.bsec{background:#fff;border-radius:var(--radius-lg);border:1px solid var(--border);padding:20px 20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.btit{font-size:13px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;border-bottom:2px solid var(--red);padding-bottom:8px;}
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.blbl{font-size:12px;color:var(--text);min-width:130px;font-weight:600;}
+.bbg{flex:1;background:var(--light);border-radius:99px;height:8px;overflow:hidden;}
+.bfil{height:100%;border-radius:99px;}
+.bval{font-size:12px;font-weight:700;color:var(--navy);min-width:32px;text-align:right;}
+.dtbl{width:100%;border-collapse:collapse;font-size:12px;}
+.dtbl th{padding:8px 12px;text-align:left;background:var(--navy);color:rgba(255,255,255,.8);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.dtbl tr:nth-child(even){background:var(--light);}
+.mapholder{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
+.mapholder iframe{width:100%;height:320px;border:none;display:block;}
+.map-label{background:var(--navy);color:rgba(255,255,255,.8);padding:6px 12px;font-size:11px;}
+
+/* &#9472;&#9472; RESOURCES &#9472;&#9472; */
+/* uses .dg and .dc above */
+
+/* &#9472;&#9472; MODAL &#9472;&#9472; */
+.mov{
+  display:none;position:fixed;inset:0;
+  background:rgba(9,49,91,.6);backdrop-filter:blur(3px);
+  z-index:2000;align-items:center;justify-content:center;
+}
+.mov.open{display:flex;}
+.modal{
+  background:#fff;border-radius:var(--radius-lg);
+  padding:32px;max-width:520px;width:90%;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  border-top:4px solid var(--navy);
+  max-height:85vh;overflow-y:auto;
+}
+.mtit{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:16px;}
+.mbdy{font-size:14px;color:var(--text);line-height:1.7;}
+.mclose{
+  margin-top:20px;background:var(--navy);color:#fff;
+  border:none;border-radius:var(--radius);padding:10px 24px;
+  font-size:13px;font-weight:700;cursor:pointer;
+  font-family:'Nunito Sans',Arial,sans-serif;
+}
+
+/* &#9472;&#9472; KPI CARDS &#9472;&#9472; */
+.dkpi .kc{border-top:3px solid var(--navy);}
+
+/* &#9472;&#9472; FOOTER &#9472;&#9472; */
+footer{
+  background:var(--footer);
+  border-top:4px solid var(--red);
+  padding:28px 20px;text-align:center;
+  color:rgba(255,255,255,.55);font-size:12px;
+  line-height:1.8;
+}
+footer strong{color:rgba(255,255,255,.8);}
+footer a{color:rgba(255,255,255,.6);text-decoration:none;}
+footer a:hover{color:#fff;}
+
+/* &#9472;&#9472; ANIMATIONS &#9472;&#9472; */
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* &#9472;&#9472; RESPONSIVE &#9472;&#9472; */
+@media(max-width:768px){
+  .poc-grid{grid-template-columns:1fr 1fr;}
+  .poc{border-right:none;border-bottom:1px solid var(--border);}
+  .dkpi{grid-template-columns:1fr 1fr;}
+  .supanel .sugrid{grid-template-columns:1fr;}
+  .nb{font-size:11px;padding:7px 8px;}
+  .hero h1{font-size:28px;}
+  .qcard{padding:24px 18px;}
+}
+@media(max-width:480px){
+  .poc-grid{grid-template-columns:1fr;}
+  .dkpi{grid-template-columns:1fr;}
+  .topnav .nb[id="n-dash"]{display:none;}
+}
+
+/* &#9472;&#9472; RVA INPUT STYLE &#9472;&#9472; */
+.ai{
+  width:100%;padding:10px 14px;
+  border:1px solid var(--border);border-radius:var(--radius);
+  font-family:'Nunito Sans',Arial,sans-serif;font-size:14px;
+  color:var(--text);outline:none;
+  transition:border-color .15s;background:#fff;
+}
+.ai:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(21,69,123,.12);}
+.awb{
+  background:var(--navy);color:#fff;border:none;
+  border-radius:var(--radius);padding:10px 18px;
+  font-size:13px;font-weight:700;cursor:pointer;
+  font-family:'Nunito Sans',Arial,sans-serif;
+  white-space:nowrap;transition:background .15s;
+}
+.awb:hover{background:var(--navy-dk);}
+
+/* &#9472;&#9472; OPPORTUNITY CARD STYLES &#9472;&#9472; */
+.rva-row:hover td{background:#EFF4FB !important;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="site-wordmark" href="#" onclick="goTo('s-home','n-home');return false;">
+      <div class="seal">&#127981;</div>
+      <div class="wordmark-text">
+        <span class="wordmark-top">City of</span>
+        <span class="wordmark-city">Richmond, VA</span>
+      </div>
+      <span class="app-badge">BizNavigator</span>
+    </a>
+    <nav class="topnav">
+      <button class="nb on" id="n-home" onclick="goTo('s-home','n-home')">Home</button>
+      <button class="nb" id="n-quiz" onclick="goTo('s-quiz','n-quiz');showQ(1)">Start Checklist</button>
+      <button class="nb" id="n-opp"  onclick="goTo('s-opp','n-opp');oppTabInit()">Opportunities</button>
+      <button class="nb" id="n-dash" onclick="goTo('s-dash','n-dash');renderDash()">City Dashboard</button>
+      <button class="nb" id="n-res"  onclick="goTo('s-res','n-res')">Resources</button>
+      <div class="lang-grp">
+        <button class="lb on" id="lb-en" onclick="setLang('en')">EN</button>
+        <button class="lb"    id="lb-es" onclick="setLang('es')">ES</button>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="s-home" class="screen active">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">City of Richmond, Virginia &bull; Business Navigation Tool</div>
+      <h1>Start your business in <em>Richmond</em> &mdash; right.</h1>
+      <p class="hero-sub">The only navigator that sequences every permit in correct order, estimates your total cost, and connects you to real City contracts and support resources.</p>
+      <div class="hero-actions">
+        <button class="btn-yellow" onclick="goTo('s-quiz','n-quiz');showQ(1)">Get My Custom Checklist &rarr;</button>
+        <button class="btn-navy" onclick="goTo('s-opp','n-opp');oppTabInit()">Find Contract Opportunities</button>
+      </div>
+    </div>
+  </div>
+  <div class="conw">
+    <div style="text-align:center;margin:36px 0 24px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;" id="how-its-works-title">How it works</div>
+      <div style="font-size:26px;font-weight:900;color:var(--navy);margin-bottom:10px;" id="how-its-works-sub">Four phases. One clear path.</div>
+      <p style="font-size:14px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.7;">Every Richmond business must complete Legal &rarr; Location &rarr; License in order. Phase 4 unlocks growth resources, certifications, and funding.</p>
+    </div>
+    <div class="poc-grid">
+      <div class="poc">
+        <div class="poc-icon">&#127963;</div>
+        <div class="poc-num p1">1</div>
+        <h3>Legal Formation</h3>
+        <p>Register with VA SCC &bull; Federal EIN &bull; State tax registration.</p>
+        <div style="margin-top:10px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">State Level &bull; ~$100</div>
+      </div>
+      <div class="poc">
+        <div class="poc-icon">&#128205;</div>
+        <div class="poc-num p2">2</div>
+        <h3>Zoning &amp; Location</h3>
+        <p>Home Occupation Permit or Certificate of Zoning Compliance &bull; Building permits.</p>
+        <div style="margin-top:10px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">City Level &bull; ~$50&ndash;$250</div>
+      </div>
+      <div class="poc">
+        <div class="poc-icon">&#128196;</div>
+        <div class="poc-num p3">3</div>
+        <h3>Business License</h3>
+        <p>BPOL license from City Finance &bull; SAM.gov &bull; eVA Virginia registration.</p>
+        <div style="margin-top:10px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">City Level &bull; ~$30</div>
+      </div>
+      <div class="poc">
+        <div class="poc-icon">&#128200;</div>
+        <div class="poc-num p4">4</div>
+        <h3>Growth &amp; Support</h3>
+        <p>SCORE mentoring &bull; SWaM certification &bull; MBD Office &bull; SBA programs.</p>
+        <div style="margin-top:10px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Ongoing &bull; Mostly Free</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px;">
+      <button class="btn-yellow" onclick="goTo('s-quiz','n-quiz');showQ(1)">Start My Personalized Checklist &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="s-quiz" class="screen">
+  <div style="background:var(--navy);padding:20px;border-bottom:4px solid var(--red);">
+    <div style="max-width:680px;margin:0 auto;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px;">3 Questions</div>
+      <div style="font-size:18px;font-weight:800;color:#fff;" id="tell-us-header">Tell us about your business</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:4px;" id="tell-us-sub">3 questions = your personalized 4-phase checklist</div>
+    </div>
+  </div>
+  <div class="qwrap">
+    <div id="q1" class="qcard">
+      <div class="qprog"><div class="qpd on"></div><div class="qpd"></div><div class="qpd"></div></div>
+      <div class="qq" data-en="What type of business are you starting?" data-es="&iquest;Qu&eacute; tipo de negocio va a iniciar?">What type of business are you starting?</div>
+      <div class="qh" data-en="This determines which state and city registrations apply to you." data-es="Esto determina qu&eacute; registros estatales y municipales aplican.">This determines which state and city registrations apply to you.</div>
+      <div class="og">
+        <div class="opt" onclick="pick(1,'LLC / Corporation',this)"><div class="oi">&#127970;</div><div><div class="ol" data-en="LLC or Corporation" data-es="LLC o Corporaci&oacute;n">LLC or Corporation</div><div class="od" data-en="Formal entity, liability protection" data-es="Entidad formal, protecci&oacute;n de responsabilidad">Formal entity, liability protection</div></div></div>
+        <div class="opt" onclick="pick(1,'Sole Proprietorship',this)"><div class="oi">&#129329;</div><div><div class="ol" data-en="Sole Proprietorship" data-es="Propietario &Uacute;nico">Sole Proprietorship</div><div class="od" data-en="Simplest structure, you are the business" data-es="Estructura m&aacute;s simple, usted es el negocio">Simplest structure, you are the business</div></div></div>
+        <div class="opt" onclick="pick(1,'Partnership',this)"><div class="oi">&#129309;</div><div><div class="ol" data-en="Partnership" data-es="Sociedad">Partnership</div><div class="od" data-en="Two or more owners sharing" data-es="Dos o m&aacute;s propietarios">Two or more owners sharing</div></div></div>
+        <div class="opt" onclick="pick(1,'Nonprofit',this)"><div class="oi">&#128155;</div><div><div class="ol" data-en="Nonprofit" data-es="Sin Fines de Lucro">Nonprofit</div><div class="od" data-en="Mission-driven, tax-exempt" data-es="Con misi&oacute;n social, exenta de impuestos">Mission-driven, tax-exempt</div></div></div>
+      </div>
+      <div class="qnav">
+        <button class="btn-g" onclick="goTo('s-home','n-home')">&larr; Home</button>
+        <button class="btn-p" id="q1n" style="opacity:.4;pointer-events:none" onclick="nextQ(1)" data-en="Next &rarr;" data-es="Siguiente &rarr;">Next &rarr;</button>
+      </div>
+    </div>
+    
+    <div id="q2" class="qcard" style="display:none">
+      <div class="qprog"><div class="qpd dn"></div><div class="qpd on"></div><div class="qpd"></div></div>
+      <div class="qq" data-en="Where will your business operate?" data-es="&iquest;D&oacute;nde operar&aacute; su negocio?">Where will your business operate?</div>
+      <div class="qh" data-en="Your location determines which City permits are required." data-es="Su ubicaci&oacute;n determina qu&eacute; permisos municipales se requieren.">Your location determines which City permits are required.</div>
+      <div class="og">
+        <div class="opt" onclick="pick(2,'Home-Based',this)"><div class="oi">&#127968;</div><div><div class="ol" data-en="Home-Based" data-es="Desde Casa">Home-Based</div><div class="od" data-en="Operating from a residential address" data-es="Operando desde una direcci&oacute;n residencial">Operating from a residential address</div></div></div>
+        <div class="opt" onclick="pick(2,'Commercial Space',this)"><div class="oi">&#127978;</div><div><div class="ol" data-en="Commercial Space" data-es="Espacio Comercial">Commercial Space</div><div class="od" data-en="Leasing or owning commercial property" data-es="Arrendando o poseyendo propiedad comercial">Leasing or owning commercial property</div></div></div>
+        <div class="opt" onclick="pick(2,'Renovating',this)"><div class="oi">&#128296;</div><div><div class="ol" data-en="Renovating a Space" data-es="Renovando un Espacio">Renovating a Space</div><div class="od" data-en="Construction or trade work needed" data-es="Se necesita trabajo de construcci&oacute;n">Construction or trade work needed</div></div></div>
+        <div class="opt" onclick="pick(2,'Online',this)"><div class="oi">&#128187;</div><div><div class="ol" data-en="Online / No Location" data-es="En L&iacute;nea / Sin Ubicaci&oacute;n">Online / No Location</div><div class="od" data-en="Fully digital or mobile" data-es="Completamente digital o m&oacute;vil">Fully digital or mobile</div></div></div>
+      </div>
+      <div class="qnav">
+        <button class="btn-g" onclick="showQ(1)">&larr; Back</button>
+        <button class="btn-p" id="q2n" style="opacity:.4;pointer-events:none" onclick="nextQ(2)">Next &rarr;</button>
+      </div>
+    </div>
+    
+    <div id="q3" class="qcard" style="display:none">
+      <div class="qprog"><div class="qpd dn"></div><div class="qpd dn"></div><div class="qpd on"></div></div>
+      <div class="qq" data-en="Which industry best describes you?" data-es="&iquest;Qu&eacute; industria le describe mejor?">Which industry best describes you?</div>
+      <div class="qh" data-en="Determines additional permits needed (food, health, trades licensing) and relevant contract opportunities." data-es="Determina permisos adicionales (alimentos, salud, oficios) y oportunidades de contratos relevantes.">Determines additional permits needed (food, health, trades licensing) and relevant contract opportunities.</div>
+      <div class="og">
+        <div class="opt" onclick="pick(3,'Retail / Food',this)"><div class="oi">&#128717;</div><div><div class="ol" data-en="Retail or Food Service" data-es="Comercio o Servicios de Alimentos">Retail or Food Service</div><div class="od" data-en="Selling goods or food to customers" data-es="Vendiendo bienes o alimentos a clientes">Selling goods or food to customers</div></div></div>
+        <div class="opt" onclick="pick(3,'Professional Services',this)"><div class="oi">&#128203;</div><div><div class="ol" data-en="Professional Services" data-es="Servicios Profesionales">Professional Services</div><div class="od" data-en="Consulting, legal, accounting, tech" data-es="Consultor&iacute;a, legal, contabilidad, tecnolog&iacute;a">Consulting, legal, accounting, tech</div></div></div>
+        <div class="opt" onclick="pick(3,'Trades / Construction',this)"><div class="oi">&#128295;</div><div><div class="ol" data-en="Trades or Construction" data-es="Oficios o Construcci&oacute;n">Trades or Construction</div><div class="od" data-en="Contractor, electrician, plumber" data-es="Contratista, electricista, plomero">Contractor, electrician, plumber</div></div></div>
+        <div class="opt" onclick="pick(3,'Creative / Arts',this)"><div class="oi">&#127912;</div><div><div class="ol" data-en="Creative or Arts" data-es="Creativo o Artes">Creative or Arts</div><div class="od" data-en="Design, photography, music" data-es="Dise&ntilde;o, fotograf&iacute;a, m&uacute;sica">Design, photography, music</div></div></div>
+        <div class="opt" onclick="pick(3,'Childcare / Health',this)"><div class="oi">&#10084;</div><div><div class="ol" data-en="Childcare or Health" data-es="Cuidado Infantil o Salud">Childcare or Health</div><div class="od" data-en="Care, wellness, medical" data-es="Cuidado, bienestar, m&eacute;dico">Care, wellness, medical</div></div></div>
+        <div class="opt" onclick="pick(3,'Other',this)"><div class="oi">&#10035;</div><div><div class="ol" data-en="Other" data-es="Otro">Other</div><div class="od" data-en="Not listed above" data-es="No listado arriba">Not listed above</div></div></div>
+      </div>
+      <div class="qnav">
+        <button class="btn-g" onclick="showQ(2)">&larr; Back</button>
+        <button class="btn-p" id="q3n" style="opacity:.4;pointer-events:none" onclick="build()" data-en="Build My Checklist &rarr;" data-es="Crear Mi Lista &rarr;">Build My Checklist &rarr;</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div id="s-cl" class="screen">
+  <div class="cl-hdr">
+    <div class="cl-hdr-inner">
+      <div class="rt-tit-label">Your Personalized Business Checklist</div>
+      <div class="rt-tit" id="rt-tit">Complete your 3 questions to build your checklist</div>
+      <div class="rt-sub" id="rt-sub">Your personalized, data-backed path to legal operation in Richmond, VA.</div>
+      <div id="rt-bdg" style="margin-top:8px;"></div>
+    </div>
+  </div>
+  <div class="prw">
+    <div class="prw-inner">
+      <span class="prl"><span id="pr-lbl-span">Overall progress</span>: <span id="pr-pct">0%</span></span>
+      <div class="prb"><div class="prf" id="pr-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="cl-body-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+      <div class="cb" style="border:1px solid var(--border);border-radius:var(--radius-lg);border-top:3px solid var(--navy);background:#fff;padding:20px;">
+        <h3>&#128176; Estimated Total Cost &amp; Timeline</h3>
+        <table class="ctbl" id="cost-tbl"></table>
+        <div class="ctot">
+          <div><div class="ctot-l">Estimated Total</div><div class="ctot-d" id="ctot-d"></div></div>
+          <div class="ctot-v" id="ctot-v">$0</div>
+        </div>
+      </div>
+      <div class="tlw" style="border:1px solid var(--border);border-radius:var(--radius-lg);border-top:3px solid var(--red);background:#fff;padding:20px;">
+        <h3>&#128197; Formation Timeline &mdash; click any step</h3>
+        <div class="tlt"><div class="tll"></div><div class="tls" id="tl-steps"></div></div>
+        <div class="tldet" id="tl-det"></div>
+      </div>
+    </div>
+    <div id="cl-body"></div>
+    <div style="margin-top:28px;">
+      <div class="slbl">City Department Quick Links</div>
+      <div class="dg" id="dept-grid"></div>
+    </div>
+    <div class="supanel">
+      <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;" id="need-help-title">Need help along the way?</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.7);" id="need-help-sub">Richmond's small business support network &mdash; no wrong door.</div>
+      <div class="sugrid">
+        <button class="sub" onclick="openM('appt')"><strong data-en="&#128222; Contact City of Richmond" data-es="&#128222; Contactar Ciudad de Richmond">&#128222; Contact City of Richmond</strong><small data-en="Call 804-646-7000 or 3-1-1" data-es="Llame al 804-646-7000 o 3-1-1">Call 804-646-7000 or 3-1-1</small></button>
+        <button class="sub" onclick="openM('mbd')"><strong data-en="&#129309; Minority Business Support" data-es="&#129309; Apoyo a Negocios Minoritarios">&#129309; Minority Business Support</strong><small data-en="MBE/WBE certification &amp; resources" data-es="Certificacion MBE/WBE y recursos">MBE/WBE certification &amp; resources</small></button>
+        <button class="sub" onclick="openM('score')"><strong data-en="&#128161; Free SCORE Mentoring" data-es="&#128161; Mentoria Gratuita SCORE">&#128161; Free SCORE Mentoring</strong><small data-en="Retired executive mentors, no cost" data-es="Mentores ejecutivos, sin costo">Retired executive mentors, no cost</small></button>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+      <button class="btn-g" onclick="showQ(1);goTo('s-quiz','n-quiz')">&larr; Retake quiz with different answers</button>
+    </div>
+  </div>
+</div>
+
+<!-- OPPORTUNITIES -->
+<div id="s-opp" class="screen">
+  <div class="res-page-hdr">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="slbl">Live Procurement Data &mdash; Richmond, VA</div>
+      <div class="stit">Contract Opportunities</div>
+      <p>Richmond City Contracts load live from the official open data portal (Socrata API). SAM.gov federal opportunities open pre-filtered. eVA active solicitations via OpenGov.</p>
+    </div>
+  </div>
+  <div class="conw" style="padding-top:28px;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">
+      <div class="kc">
+        <div style="font-size:10px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px;font-weight:700;"><span id="rva-dot" style="width:7px;height:7px;border-radius:50%;background:#10B981;display:inline-block;animation:pulse 2s infinite;"></span>Richmond City Contracts</div>
+        <div class="kv" id="rva-count">--</div>
+        <div style="font-size:11px;color:var(--muted);">Loaded from data.richmondgov.com</div>
+      </div>
+      <div class="kc">
+        <div style="font-size:10px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px;font-weight:700;"><span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>SAM.gov Federal</div>
+        <div class="kv">Search</div>
+        <div style="font-size:11px;color:var(--muted);">Pre-filtered to VA / Richmond</div>
+      </div>
+      <div class="kc">
+        <div style="font-size:10px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px;font-weight:700;"><span style="width:7px;height:7px;border-radius:50%;background:var(--navy);display:inline-block;"></span>eVA / VITA</div>
+        <div class="kv">Portal</div>
+        <div style="font-size:11px;color:var(--muted);">OpenGov + VITA direct links</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;">
+      <button class="opp-tab on" id="tab-rva" onclick="showOppTab('rva')">&#127963; Richmond City Contracts</button>
+      <button class="opp-tab" id="tab-sam" onclick="showOppTab('sam')">&#127482;&#127480; SAM.gov Federal</button>
+      <button class="opp-tab" id="tab-eva" onclick="showOppTab('eva')">&#127760; eVA &amp; VITA</button>
+    </div>
+    <!-- RVA TAB -->
+    <div id="panel-rva" class="opp-panel" style="display:block;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+        <div>
+          <div style="font-size:13px;font-weight:800;color:var(--navy);">City of Richmond &mdash; Awarded Contracts</div>
+          <div style="font-size:11px;color:var(--muted);">Source: data.richmondgov.com &bull; Socrata xqn7-jvv2 &bull; Sorted by contract value DESC</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input id="rva-search" type="text" placeholder="Search contracts..." class="ai" style="width:200px;" oninput="filterRVA()">
+          <select id="rva-cat" onchange="filterRVA()" style="padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:'Nunito Sans',Arial,sans-serif;background:#fff;color:var(--text);outline:none;min-width:180px;">
+            <option value="">All Departments</option>
+          </select>
+          <button onclick="loadRVA()" class="btn-red" data-en="&#8635; Refresh" data-es="&#8635; Actualizar">&#8635; Refresh</button>
+        </div>
+      </div>
+      <div id="rva-status" style="display:none;padding:12px 16px;border-radius:var(--radius);font-size:13px;margin-bottom:12px;"></div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="background:var(--navy);">
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;">Contract #</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.5px;text-transform:uppercase;">Description</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.5px;text-transform:uppercase;">Supplier</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.5px;text-transform:uppercase;">Department</th>
+              <th style="padding:10px 12px;text-align:right;font-size:10px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.5px;text-transform:uppercase;">Contract Value</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.5px;text-transform:uppercase;">Effective From</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.5px;text-transform:uppercase;">Effective To</th>
+            </tr>
+          </thead>
+          <tbody id="rva-tbody">
+            <tr><td colspan="7" style="padding:32px;text-align:center;color:var(--muted);">Loading Richmond City contracts...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:11px;color:var(--muted);" id="rva-showing"></div>
+        <a href="https://data.richmondgov.com/Well-Managed-Government/City-Contracts/xqn7-jvv2" onclick="openLink(this.href);return false;" style="font-size:11px;color:var(--red);font-weight:700;text-decoration:none;">View full dataset on Richmond Open Data &rarr;</a>
+      </div>
+    </div>
+    <!-- SAM TAB -->
+    <div id="panel-sam" class="opp-panel" style="display:none;">
+      <div style="background:#FFF8E1;border:1px solid #FFE082;border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;font-size:12px;color:#6D4C00;line-height:1.6;">
+        <strong>&#9888; Browser CORS restriction:</strong> SAM.gov's API does not support direct browser calls from static HTML. The button below opens SAM.gov pre-filtered for Virginia / Richmond.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+        <div>
+          <label style="font-size:11px;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;">Keywords</label>
+          <input id="sam-kw" type="text" placeholder="e.g. IT services, construction..." class="ai">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:var(--navy);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;">Set-Aside</label>
+          <select id="sam-sa" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'Nunito Sans',Arial,sans-serif;background:#fff;color:var(--text);outline:none;">
+            <option value="">Any / All</option>
+            <option value="SBA">Small Business</option>
+            <option value="8A">8(a)</option>
+            <option value="HZC">HUBZone</option>
+            <option value="SDVOSBC">SDVOSB</option>
+            <option value="WOSB">WOSB</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="openSAMSearch()" class="btn-yellow" style="display:block;width:100%;padding:13px;font-size:14px;">&#127482;&#127480; Search SAM.gov &mdash; Filtered to Virginia / Richmond &rarr;</button>
+      <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:18px;">
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:12px;text-transform:uppercase;letter-spacing:.3px;">Quick-access SAM.gov searches</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <a href="https://sam.gov/search/?index=opp&is_active=true&sort=-modifiedDate&location=Richmond%2C%20VA" onclick="openLink(this.href);return false;" style="display:block;padding:10px 14px;background:var(--light);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;font-size:12px;color:var(--text);font-weight:600;">&#127963; All active &mdash; Richmond VA</a>
+          <a href="https://sam.gov/search/?index=opp&is_active=true&sort=-modifiedDate&typeOfSetAside=SBA&location=Virginia" onclick="openLink(this.href);return false;" style="display:block;padding:10px 14px;background:var(--light);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;font-size:12px;color:var(--text);font-weight:600;">&#127962; Small Business set-asides &mdash; VA</a>
+          <a href="https://sam.gov/search/?index=opp&is_active=true&sort=-modifiedDate&typeOfSetAside=8A&location=Virginia" onclick="openLink(this.href);return false;" style="display:block;padding:10px 14px;background:var(--light);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;font-size:12px;color:var(--text);font-weight:600;">&#129309; 8(a) set-asides &mdash; VA</a>
+          <a href="https://sam.gov/search/?index=opp&is_active=true&sort=-modifiedDate&typeOfSetAside=WOSB&location=Virginia" onclick="openLink(this.href);return false;" style="display:block;padding:10px 14px;background:var(--light);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;font-size:12px;color:var(--text);font-weight:600;">&#128105; Women-Owned (WOSB) &mdash; VA</a>
+        </div>
+      </div>
+    </div>
+    <!-- EVA TAB -->
+    <div id="panel-eva" class="opp-panel" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;border-top:3px solid var(--navy);">
+          <div style="background:var(--navy);padding:18px 20px;">
+            <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;">&#127760; eVA Virginia</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.7);">Virginia eProcurement &bull; OpenGov portal</div>
+          </div>
+          <div style="padding:16px 20px;">
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px;">Richmond City and Virginia state agencies post IFBs and RFPs here. No login required to browse.</p>
+            <a href="https://procurement.opengov.com/portal/rva" onclick="openLink(this.href);return false;" style="display:block;text-align:center;padding:10px;background:var(--navy);color:#fff;border-radius:var(--radius);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:8px;">&#127963; Richmond City Solicitations &rarr;</a>
+            <a href="https://eva.virginia.gov/vss/UI_VSSPublic/AltSelfService" onclick="openLink(this.href);return false;" style="display:block;text-align:center;padding:10px;background:var(--light);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;font-size:13px;font-weight:600;margin-bottom:8px;">&#127760; Virginia Business Opportunities &rarr;</a>
+            <a href="https://mvendor.cgieva.com/Vendor/public/AllOpportunities.jsp?&agencyname=City%20of%20Richmond%20Government" onclick="openLink(this.href);return false;" style="display:block;text-align:center;padding:10px;background:var(--light);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;font-size:13px;font-weight:600;">&#128203; City of Richmond Vendor Portal &rarr;</a>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;border-top:3px solid var(--red);">
+          <div style="background:var(--red);padding:18px 20px;">
+            <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;">&#128187; VITA Statewide IT Contracts</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.7);">Virginia Information Technologies Agency</div>
+          </div>
+          <div style="padding:16px 20px;">
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px;">Statewide IT contracts usable by Richmond and all Virginia agencies. Cloud, cybersecurity, staffing, software.</p>
+            <a href="https://vita.cobblestonesystems.com/public/" onclick="openLink(this.href);return false;" style="display:block;text-align:center;padding:10px;background:var(--red);color:#fff;border-radius:var(--radius);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:8px;">&#128187; Browse VITA Contracts &rarr;</a>
+            <a href="https://www.sbsd.virginia.gov" onclick="openLink(this.href);return false;" style="display:block;text-align:center;padding:10px;background:var(--light);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;font-size:13px;font-weight:600;">&#127885; SWaM Certification (DSBSD) &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CITY DASHBOARD -->
+<div id="s-dash" class="screen">
+  <div class="res-page-hdr">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="slbl">City Staff View &mdash; Aggregate Analytics</div>
+      <div class="stit">Business Formation Dashboard</div>
+      <p>Aggregate session analytics &mdash; helps City staff understand demand patterns. No personal data stored.</p>
+    </div>
+  </div>
+  <div class="conw" style="padding-top:28px;">
+    <div class="dkpi">
+      <div class="kc"><div class="kv" id="d-sess">247</div><div class="kl" data-en="Sessions This Month" data-es="Sesiones Este Mes">Sessions This Month</div></div>
+      <div class="kc"><div class="kv" id="d-chk">189</div><div class="kl" data-en="Checklists Generated" data-es="Listas Generadas">Checklists Generated</div></div>
+      <div class="kc"><div class="kv">43%</div><div class="kl" data-en="Avg Task Completion" data-es="Completacion Promedio">Avg Task Completion</div></div>
+      <div class="kc"><div class="kv">31%</div><div class="kl" data-en="Spanish Sessions" data-es="Sesiones en Espanol">Spanish Sessions</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <div class="bsec">
+        <div class="btit">Business type breakdown</div>
+        <div class="brow"><div class="blbl">LLC / Corporation</div><div class="bbg"><div class="bfil" style="width:48%;background:var(--navy)"></div></div><div class="bval">48%</div></div>
+        <div class="brow"><div class="blbl">Sole Proprietorship</div><div class="bbg"><div class="bfil" style="width:35%;background:var(--red)"></div></div><div class="bval">35%</div></div>
+        <div class="brow"><div class="blbl">Partnership</div><div class="bbg"><div class="bfil" style="width:12%;background:#C47A00"></div></div><div class="bval">12%</div></div>
+        <div class="brow"><div class="blbl">Nonprofit</div><div class="bbg"><div class="bfil" style="width:5%;background:#2E7D32"></div></div><div class="bval">5%</div></div>
+      </div>
+      <div class="bsec">
+        <div class="btit">Industry distribution</div>
+        <div class="brow"><div class="blbl">Professional Services</div><div class="bbg"><div class="bfil" style="width:32%;background:var(--navy)"></div></div><div class="bval">32%</div></div>
+        <div class="brow"><div class="blbl">Retail / Food</div><div class="bbg"><div class="bfil" style="width:28%;background:var(--red)"></div></div><div class="bval">28%</div></div>
+        <div class="brow"><div class="blbl">Trades / Construction</div><div class="bbg"><div class="bfil" style="width:19%;background:#C47A00"></div></div><div class="bval">19%</div></div>
+        <div class="brow"><div class="blbl">Creative / Health / Other</div><div class="bbg"><div class="bfil" style="width:21%;background:#94A3B8"></div></div><div class="bval">21%</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+      <div class="bsec">
+        <div class="btit">Location type requested</div>
+        <div class="brow"><div class="blbl">Home-Based</div><div class="bbg"><div class="bfil" style="width:54%;background:#D97706"></div></div><div class="bval">54%</div></div>
+        <div class="brow"><div class="blbl">Commercial Space</div><div class="bbg"><div class="bfil" style="width:29%;background:var(--navy)"></div></div><div class="bval">29%</div></div>
+        <div class="brow"><div class="blbl">Online / No Location</div><div class="bbg"><div class="bfil" style="width:12%;background:var(--red)"></div></div><div class="bval">12%</div></div>
+        <div class="brow"><div class="blbl">Renovating</div><div class="bbg"><div class="bfil" style="width:5%;background:#C47A00"></div></div><div class="bval">5%</div></div>
+      </div>
+      <div class="bsec">
+        <div class="btit">Estimated dept. intake this month</div>
+        <div class="brow"><div class="blbl">Finance (BPOL)</div><div class="bbg"><div class="bfil" style="width:78%;background:var(--red)"></div></div><div class="bval">~148</div></div>
+        <div class="brow"><div class="blbl">Planning (Permits)</div><div class="bbg"><div class="bfil" style="width:56%;background:var(--navy)"></div></div><div class="bval">~106</div></div>
+        <div class="brow"><div class="blbl">SCC Registrations</div><div class="bbg"><div class="bfil" style="width:44%;background:#C47A00"></div></div><div class="bval">~83</div></div>
+        <div class="brow"><div class="blbl">Minority Business Dev.</div><div class="bbg"><div class="bfil" style="width:22%;background:#2E7D32"></div></div><div class="bval">~42</div></div>
+      </div>
+    </div>
+    <div class="bsec">
+      <div class="btit">Geographic Overview &mdash; Richmond Zoning Map (Atlas.co)</div>
+      <div class="mapholder">
+        <iframe src="https://app.atlas.co/shared/48tcyCZ08I84MxeabMFb?loc=-77.4618%2C37.5304%2C11.8075z&public=true" title="Richmond Zoning Map" loading="lazy" allowfullscreen></iframe>
+        <div class="map-label"><span>&#128506; Live Richmond Zoning Map &bull; Atlas.co &bull; Click to explore parcels and zoning districts</span></div>
+      </div>
+    </div>
+    <div class="bsec">
+      <div class="btit" style="display:flex;justify-content:space-between;align-items:center;">Recent sessions <span style="font-size:11px;font-family:monospace;color:var(--muted);font-weight:400;" id="dash-row-count">--</span> <span style="font-size:10px;color:var(--muted);font-weight:400;">(anonymized &bull; no PII stored)</span></div>
+      <div style="overflow-x:auto;overflow-y:auto;max-height:420px;"><table class="dtbl"><thead><tr><th>Date</th><th>Business Type</th><th>Industry</th><th>Location</th><th>Language</th><th>Completion</th></tr></thead><tbody id="dash-tbody"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESOURCES -->
+<div id="s-res" class="screen">
+  <div class="res-page-hdr">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="slbl">City of Richmond &amp; Commonwealth of Virginia</div>
+      <div class="stit">All Business Resources</div>
+      <p>Every department, portal, and support organization you need &mdash; verified and linked.</p>
+    </div>
+  </div>
+  <div class="conw" style="padding-top:28px;">
+    <div class="dg" style="grid-template-columns:repeat(auto-fill,minmax(195px,1fr));">
+      <a href="https://www.rva.gov/finance" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#127974;</div><div class="dn2">Finance &mdash; Business Licensing</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Apply for BPOL license</div><div class="du">rva.gov/finance</div></a>
+      <a href="https://www.rva.gov/planning-development-review" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128506;</div><div class="dn2">Planning &amp; Development</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Permits, zoning, home occupation</div><div class="du">rva.gov/planning-development-review</div></a>
+      <a href="https://www.rva.gov/minority-business" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#129309;</div><div class="dn2">Minority Business Dev.</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">MBE/WBE certification &amp; support</div><div class="du">rva.gov/minority-business</div></a>
+      <a href="https://www.richmondeda.org" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128200;</div><div class="dn2">Economic Dev. Authority</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Incentives &amp; financing programs</div><div class="du">richmondeda.org</div></a>
+      <a href="https://energov.richmondgov.com" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128274;</div><div class="dn2">EnerGov Permit Portal</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Submit &amp; track building permits</div><div class="du">energov.richmondgov.com</div></a>
+      <a href="https://app.atlas.co/shared/48tcyCZ08I84MxeabMFb?loc=-77.4618%2C37.5304%2C11.8075z&public=true" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128506;</div><div class="dn2">Richmond Zoning Map</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Official zoning district lookup</div><div class="du">Atlas.co Richmond</div></a>
+      <a href="https://cis.scc.virginia.gov/EntitySearch/Index" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#127963;</div><div class="dn2">VA SCC &mdash; Entity Search</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Search &amp; register VA businesses</div><div class="du">cis.scc.virginia.gov</div></a>
+      <a href="https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128290;</div><div class="dn2">IRS &mdash; EIN Application</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Free Federal EIN, instant online</div><div class="du">irs.gov</div></a>
+      <a href="https://www.tax.virginia.gov/register-business-virginia" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128196;</div><div class="dn2">VA Dept. of Taxation</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Register for state tax accounts</div><div class="du">tax.virginia.gov</div></a>
+      <a href="https://sam.gov" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#127482;&#127480;</div><div class="dn2">SAM.gov</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Federal contract opportunities</div><div class="du">sam.gov</div></a>
+      <a href="https://mvendor.cgieva.com/Vendor/public/AllOpportunities.jsp?&agencyname=City%20of%20Richmond%20Government" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128203;</div><div class="dn2">City Vendor Portal</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Richmond open solicitations</div><div class="du">mvendor.cgieva.com</div></a>
+      <a href="https://eva.virginia.gov" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#127760;</div><div class="dn2">eVA Virginia</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Virginia state procurement</div><div class="du">eva.virginia.gov</div></a>
+      <a href="https://vita.cobblestonesystems.com/public/" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128187;</div><div class="dn2">VITA Statewide IT</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Virginia IT contract vehicles</div><div class="du">vita.cobblestonesystems.com</div></a>
+      <a href="https://data.richmondgov.com" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128202;</div><div class="dn2">Richmond Open Data</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">City datasets &amp; contracts registry</div><div class="du">data.richmondgov.com</div></a>
+      <a href="https://richmond.score.org" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#128161;</div><div class="dn2">SCORE Richmond</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Free mentoring for small businesses</div><div class="du">richmond.score.org</div></a>
+      <a href="https://www.sba.gov/local-assistance" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#127981;</div><div class="dn2">SBA Virginia District</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Loans, training, veteran programs</div><div class="du">sba.gov</div></a>
+      <a href="https://www.sbsd.virginia.gov" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#127885;</div><div class="dn2">DSBSD &mdash; SWaM Certification</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Free certification, state preference</div><div class="du">sbsd.virginia.gov</div></a>
+      <a href="https://grcc.com" onclick="openLink(this.href);return false;" class="dc"><div class="di">&#129309;</div><div class="dn2">Greater Richmond Chamber</div><div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4">Business network &amp; advocacy</div><div class="du">grcc.com</div></a>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <button class="btn-yellow" onclick="goTo('s-quiz','n-quiz');showQ(1)">Get My Custom Checklist &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="mov" id="mov" onclick="closeM(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mtit" id="m-tit"></div>
+    <div class="mbdy" id="m-bdy"></div>
+    <button class="mclose" onclick="closeM()">Close</button>
+  </div>
+</div>
+
+<footer>
+  <strong>RVA BizNavigator &bull; City of Richmond, Virginia</strong><br>
+  Richmond Open Data &bull; Atlas.co Zoning &bull; SAM.gov &bull; eVA Virginia &bull; VITA &bull; Census Geocoder &bull; VA SCC CIS<br>
+  <a href="https://www.rva.gov" onclick="openLink('https://www.rva.gov');return false;">www.rva.gov</a> &bull;
+  <a href="tel:8046467000">(804) 646-7000</a><br>
+  <span style="font-size:11px;color:rgba(255,255,255,.4);">Not an official City of Richmond service. Does not provide legal or business advice. &copy; 2026</span>
+</footer>
+
+<script>
+// ===================================================
+// STATE
+// ===================================================
+var S={q1:null,q2:null,q3:null};
+var T={};
+var LANG='en';
+var CY=2026;
+var ATLAS='https://app.atlas.co/shared/48tcyCZ08I84MxeabMFb?loc=-77.4618%2C37.5304%2C11.8075z&public=true';
+var RVA_ALL=[];
+
+// ===================================================
+// LINK OPENER -- works in all sandbox environments
+// ===================================================
+function openLink(url){
+  var a=document.createElement('a');
+  a.href=url; a.target='_blank'; a.rel='noopener noreferrer';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+// ===================================================
+// LANGUAGE
+// ===================================================
+function setLang(lang){
+  LANG=lang;
+  // Update language toggle buttons
+  document.getElementById('lb-en').classList.toggle('on',lang==='en');
+  document.getElementById('lb-es').classList.toggle('on',lang==='es');
+
+  // Walk ALL elements with data-en / data-es attributes and swap content
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    var en=el.getAttribute('data-en');
+    var es=el.getAttribute('data-es')||en;
+    el.innerHTML=lang==='es'?es:en;
+  });
+
+  // Swap nav button text (targeted by ID)
+  var navMap={
+    'n-home':    {en:'Home',              es:'Inicio'},
+    'n-quiz':    {en:'Start Checklist',   es:'Iniciar Lista'},
+    'n-opp':     {en:'Opportunities',     es:'Oportunidades'},
+    'n-dash':    {en:'City Dashboard',    es:'Panel Municipal'},
+    'n-res':     {en:'Resources',         es:'Recursos'},
+  };
+  Object.keys(navMap).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.textContent=lang==='es'?navMap[id].es:navMap[id].en;
+  });
+
+  // Swap search placeholder
+  var rs=document.getElementById('rva-search');
+  if(rs) rs.placeholder=lang==='es'?'Buscar contratos...':'Search contracts...';
+
+  // Swap rva-cat first option
+  var rc=document.getElementById('rva-cat');
+  if(rc&&rc.options[0]) rc.options[0].text=lang==='es'?'Todos los Departamentos':'All Departments';
+
+  // Swap static page section headings that can't easily get data attrs
+  var staticMap=[
+    ['how-its-works-title',   'How it works',            'C&#243;mo funciona'],
+    ['how-its-works-sub',     'Four phases. One clear path.','Cuatro fases. Un camino claro.'],
+    ['tell-us-header',        'Tell us about your business','Cu&#233;ntenos sobre su negocio'],
+    ['tell-us-sub',           '3 questions = your personalized 4-phase checklist',
+                              '3 preguntas = su lista personalizada'],
+    ['need-help-title',       'Need help along the way?','&iquest;Necesita ayuda en el camino?'],
+    ['need-help-sub',         "Richmond's small business support network -- no wrong door.",
+                              'La red de apoyo a peque&#241;os negocios de Richmond -- ninguna puerta equivocada.'],
+    ['pr-lbl-span',           'Overall progress',        'Progreso general'],
+  ];
+  staticMap.forEach(function(item){
+    var el=document.getElementById(item[0]);
+    if(el) el.innerHTML=lang==='es'?item[2]:item[1];
+  });
+
+  // Swap retake button
+  var rb=document.querySelector('[onclick*="retake"],.btn-g');
+  // Handled by data-en attr if present
+
+  // Swap dashboard KPI labels
+  var kpiMap=[
+    ['kpi-sess','Sessions This Month','Sesiones Este Mes'],
+    ['kpi-chk', 'Checklists Generated','Listas Generadas'],
+    ['kpi-comp','Avg Task Completion','Completaci&#243;n Promedio'],
+    ['kpi-es',  'Spanish Sessions','Sesiones en Espa&#241;ol'],
+  ];
+  kpiMap.forEach(function(item){
+    var el=document.getElementById(item[0]);
+    if(el) el.textContent=lang==='es'?item[2]:item[1];
+  });
+}
+
+// ===================================================
+// NAVIGATION
+// ===================================================
+function goTo(sid,nid){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  var sc=document.getElementById(sid); if(sc) sc.classList.add('active');
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
+  if(nid){var nb=document.getElementById(nid);if(nb)nb.classList.add('on');}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===================================================
+// QUIZ
+// ===================================================
+function pick(qn,val,el){
+  S['q'+qn]=val;
+  document.getElementById('q'+qn).querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
+  el.classList.add('sel');
+  var btn=document.getElementById('q'+qn+'n');
+  if(btn){btn.style.opacity='1';btn.style.pointerEvents='auto';}
+}
+function showQ(n){
+  ['q1','q2','q3'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  var t=document.getElementById('q'+n); if(t) t.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextQ(n){if(!S['q'+n])return; showQ(n+1);}
+
+// ===================================================
+// COST ESTIMATOR
+// ===================================================
+function buildCost(isHome,isComm,isRen,needFood,needHealth){
+  var items=[
+    {name:'Entity registration (VA SCC)',cost:100,days:'1-3 days'},
+    {name:'Federal EIN (IRS -- free)',cost:0,days:'Instant'},
+    {name:'VA state tax registration (free)',cost:0,days:'1-2 days'},
+  ];
+  if(isHome)    items.push({name:'Home Occupation Permit',cost:50,days:'5-10 days'});
+  if(isComm)    items.push({name:'Certificate of Zoning Compliance',cost:165,days:'5-7 days'});
+  if(isRen)     items.push({name:'Building / trade permits (EnerGov)',cost:250,days:'7-21 days'});
+  if(!isHome&&!isComm&&!isRen) items.push({name:'Zoning confirmation (free)',cost:0,days:'1-2 days'});
+  if(needFood)  items.push({name:'Food Establishment Permit (VDH)',cost:120,days:'7-14 days'});
+  if(needHealth)items.push({name:'Health / childcare license (VDSS)',cost:200,days:'14-30 days'});
+  items.push({name:'BPOL License -- City of Richmond',cost:30,days:'3-5 days'});
+  items.push({name:'SAM.gov registration (free)',cost:0,days:'1-2 days'});
+  items.push({name:'eVA Virginia registration (free)',cost:0,days:'1 day'});
+  var total=items.reduce(function(s,i){return s+i.cost;},0);
+  var maxD=0;
+  items.forEach(function(i){var m=i.days.match(/\d+/g);if(m)maxD=Math.max(maxD,parseInt(m[m.length-1]));});
+  var totalDays=maxD+3;
+  var tbl=document.getElementById('cost-tbl');
+  if(tbl)tbl.innerHTML=items.map(function(i){
+    return '<tr><td class="cn">'+esc(i.name)+'</td><td class="cd">'+esc(i.days)+'</td><td class="ca">'+(i.cost===0?'Free':'$'+i.cost)+'</td></tr>';
+  }).join('');
+  var cv=document.getElementById('ctot-v');if(cv)cv.textContent='$'+total.toLocaleString();
+  var cd=document.getElementById('ctot-d');if(cd)cd.textContent='~'+totalDays+' total days estimated';
+  return{items:items,total:total,totalDays:totalDays};
+}
+
+// ===================================================
+// TIMELINE
+// ===================================================
+var TL=[];
+function buildTimeline(items){
+  TL=[];
+  var day=0;
+  items.forEach(function(item,i){
+    var m=item.days.match(/\d+/g);
+    var dur=m?parseInt(m[0]):1;
+    var sd=day+1; day+=dur;
+    var ph=i<3?'ph1':i<3+5?'ph2':i<3+5+4?'ph3':'ph4';
+    TL.push({name:item.name,cost:item.cost,days:item.days,sd:sd,ed:day,ph:ph,i:i});
+  });
+  var el=document.getElementById('tl-steps');if(!el)return;
+  el.innerHTML=TL.map(function(s){
+    return '<div class="tlst" onclick="showTLD('+s.i+')">'
+      +'<div class="tld '+s.ph+'">'+(s.i+1)+'</div>'
+      +'<div class="tldday">Day '+s.sd+(s.ed>s.sd?'-'+s.ed:'')+'</div>'
+      +'<div class="tldname">'+esc(s.name.split('(')[0].trim().substring(0,18))+'</div></div>';
+  }).join('');
+}
+
+function showTLD(i){
+  var s=TL[i];if(!s)return;
+  var el=document.getElementById('tl-det');if(!el)return;
+  el.className='tldet show';
+  el.innerHTML='<strong>Step '+(i+1)+': '+esc(s.name)+'</strong><br>'
+    +'Time: '+esc(s.days)+' &nbsp;|&nbsp; Cost: '+(s.cost===0?'Free':'$'+s.cost)
+    +'<br><span style="font-size:11px;color:#6EE7B7;margin-top:4px;display:block">Complete by day '+s.ed+'</span>';
+}
+
+// ===================================================
+// TASK TOGGLE + PROGRESS
+// ===================================================
+function toggleT(id){
+  T[id]=!T[id];
+  var el=document.getElementById('tk-'+id);
+  if(el)el.classList.toggle('dk',T[id]);
+  updateProg();
+}
+
+function updateProg(){
+  var all=Object.keys(T).length,done=Object.values(T).filter(Boolean).length;
+  var pct=all?Math.round(done/all*100):0;
+  var pp=document.getElementById('pr-pct');if(pp)pp.textContent=pct+'% ('+done+'/'+all+')';
+  var pf=document.getElementById('pr-fill');if(pf)pf.style.width=pct+'%';
+}
+
+// ===================================================
+// CHECKLIST BUILDER -- 4 PHASES
+// ===================================================
+function build(){
+  if(!S.q3)return;
+  goTo('s-cl','n-quiz');
+  var isHome=S.q2==='Home-Based'||S.q2==='Online';
+  var isComm=S.q2==='Commercial Space';
+  var isRen=S.q2==='Renovating';
+  var isLLC=S.q1==='LLC / Corporation'||S.q1==='Partnership';
+  var needFood=S.q3==='Retail / Food';
+  var needHealth=S.q3==='Childcare / Health';
+  var needContr=S.q3==='Trades / Construction';
+
+  document.getElementById('rt-tit').textContent=S.q1+' \u00b7 '+S.q2+' \u00b7 '+S.q3;
+  document.getElementById('rt-sub').textContent='Your personalized, data-backed path to legal operation in Richmond, VA. Complete phases 1-3 in order.';
+  document.getElementById('rt-bdg').innerHTML=[S.q1,S.q2,S.q3].map(function(b){return '<span class="rbdg">'+esc(b)+'</span>';}).join('');
+
+  var costData=buildCost(isHome,isComm,isRen,needFood,needHealth);
+  buildTimeline(costData.items);
+
+  var ATLAS_BASE='https://app.atlas.co/shared/48tcyCZ08I84MxeabMFb?loc=-77.4618%2C37.5304%2C11.8075z&public=true';
+
+  var p1=[
+    {id:'scc',name:'Register business entity (VA SCC)',desc:(isLLC?'Register your '+S.q1+' with the Virginia SCC at cis.scc.virginia.gov. Have your business name and registered agent ready.':'Formal SCC registration adds legal protection. Strongly recommended for all business types.'),url:'https://cis.scc.virginia.gov/EntitySearch/Index',lbl:'VA SCC CIS',cost:'$100',time:'1-3 days'},
+    {id:'ein',name:'Get Federal EIN (IRS -- free)',desc:'Free and instant online. Required for banking, taxes, and hiring employees. Apply at IRS.gov.',url:'https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online',lbl:'IRS EIN',cost:'Free',time:'Instant'},
+    {id:'vatax',name:'Register for Virginia state taxes',desc:'Register your new business with the Virginia Dept. of Taxation for sales tax, employer withholding, and other applicable accounts.',url:'https://www.tax.virginia.gov/register-business-virginia',lbl:'VA Tax Registration',cost:'Free',time:'1-2 days'},
+  ];
+
+  var p2=[];
+  if(isHome)    p2.push({id:'hocc',name:'Home Occupation Permit',desc:'Required for any business operating from a residential address in Richmond. Verify your zone on the Zoning Map, then apply at Planning & Development Review.',url:ATLAS_BASE,lbl:'Check Zoning Map',cost:'~$50',time:'5-10 days'});
+  if(isComm)    p2.push({id:'zone',name:'Certificate of Zoning Compliance',desc:'Required before signing a commercial lease in Richmond. Verify your zone on the Zoning Map, then apply at Planning & Development Review.',url:ATLAS_BASE,lbl:'Check Zoning Map',cost:'$30-$300',time:'5-7 days'});
+  if(isRen)     p2.push({id:'perm',name:'Building / trade permits (EnerGov)',desc:'All renovation or construction work requires a permit through EnerGov before work begins.',url:'https://energov.richmondgov.com',lbl:'EnerGov Portal',cost:'Varies',time:'7-21 days'});
+  if(!isHome&&!isComm&&!isRen) p2.push({id:'ozone',name:'Confirm registered address zoning',desc:'Even online businesses need a registered Richmond address. Verify your zone on the Richmond Zoning Map.',url:ATLAS_BASE,lbl:'Richmond Zoning Map',cost:'Free',time:'1-2 days'});
+  if(needFood)  p2.push({id:'food',name:'Food Establishment Permit (VDH)',desc:'Required from the Virginia Dept. of Health before opening any food business.',url:'https://www.vdh.virginia.gov/environmental-health/food-safety-in-virginia/foodapplication/',lbl:'VDH Food Application',cost:'~$120',time:'7-14 days'});
+  if(needHealth)p2.push({id:'hlth',name:'Health / childcare license (VDSS)',desc:'Required from the VA Dept. of Social Services before operating a childcare or health business.',url:'https://www.dss.virginia.gov/licensing/index.cgi',lbl:'VDSS Licensing',cost:'~$200',time:'14-30 days'});
+  if(needContr) p2.push({id:'dpor',name:'Professional & Occupational License',desc:'Virginia contractors and licensed tradespeople must hold an active license before starting work.',url:'https://www.virginia.gov/services/licenses/professional-and-occupational/',lbl:'VA Professional Licensing',cost:'Varies',time:'1-14 days'});
+
+  var p3=[
+    {id:'bpol',name:'Apply for BPOL License -- City of Richmond',desc:'Business, Professional & Occupational License from City Finance Dept. Apply ONLY after zoning is approved. $30 flat fee for gross receipts $5K-$100K.',url:'https://www.rva.gov/finance',lbl:'Finance Dept',cost:'$30 flat',time:'3-5 days'},
+    {id:'sam',name:'Register on SAM.gov (federal contracts)',desc:'Free registration required to bid on any federal contract. Takes 1-2 business days.',url:'https://sam.gov',lbl:'SAM.gov',cost:'Free',time:'1-2 days'},
+    {id:'eva',name:'Register on eVA (Virginia state contracts)',desc:'Virginia\'s eProcurement system -- free to register. Required for SWaM certification.',url:'https://eva.virginia.gov',lbl:'eVA',cost:'Free',time:'1 day'},
+  ];
+
+  var p4=[
+    {id:'score',name:'Book free SCORE mentoring session',desc:'SCORE Richmond offers free one-on-one mentoring from retired executives. Get help with business plan, financials, marketing, and government contracting strategy.',url:'https://richmond.score.org',lbl:'SCORE Richmond',cost:'Free',time:'Ongoing'},
+    {id:'sba',name:'Explore SBA small business resources',desc:'U.S. Small Business Administration offers free training, loan programs (7(a), 504, microloans), and veteran programs.',url:'https://www.sba.gov/local-assistance/find/?type=SBA%20District%20Office&pageNumber=1',lbl:'SBA Virginia District',cost:'Free',time:'Ongoing'},
+    {id:'eda',name:'Connect with Richmond Economic Development',desc:'Richmond EDA offers incentive programs, workforce development grants, and connections to VSBFA for low-interest business loans.',url:'https://www.richmondeda.org',lbl:'Richmond EDA',cost:'Free consult',time:'Ongoing'},
+    {id:'swam',name:'Apply for SWaM Certification',desc:'Virginia\'s SWaM certification from DSBSD gives minority, women-owned, and small businesses preference weighting on Virginia state contracts. Free to apply online.',url:'https://www.sbsd.virginia.gov',lbl:'DSBSD SWaM',cost:'Free',time:'30-60 days'},
+    {id:'mbd2',name:'Register with Richmond MBD Office',desc:'The City MBD Office provides MBE/WBE certification support, procurement coaching, networking events, and connections to City contract opportunities.',url:'https://www.rva.gov/minority-business',lbl:'MBD Office',cost:'Free',time:'Ongoing'},
+    {id:'vsbfa',name:'Explore small business financing (VSBFA)',desc:'Virginia Small Business Financing Authority offers loan guarantees and gap financing for businesses that cannot access conventional bank loans.',url:'https://www.sbsd.virginia.gov/financing/',lbl:'VSBFA Financing',cost:'Varies',time:'30-90 days'},
+    {id:'insur',name:'Obtain required business insurance',desc:'Most Richmond licenses and contracts require general liability insurance. Trades and contractors also need workers comp.',url:'https://www.scc.virginia.gov/division/insurance',lbl:'VA Insurance Info',cost:'$500+/yr',time:'1-5 days'},
+    {id:'chamber',name:'Join Greater Richmond Chamber of Commerce',desc:'The Greater Richmond Chamber offers advocacy, HR resources, business discounts, and peer networks.',url:'https://grcc.com',lbl:'Greater Richmond Chamber',cost:'$300+/yr',time:'1 day'},
+  ];
+
+  var phases=[
+    {n:1,cls:'p1',label:'Phase 1: Legal Formation',sub:'State Level \u00b7 Complete first',tasks:p1},
+    {n:2,cls:'p2',label:'Phase 2: Zoning & Location',sub:'City Level \u00b7 Complete after Phase 1',tasks:p2},
+    {n:3,cls:'p3',label:'Phase 3: Business License',sub:'City Level \u00b7 Complete last',tasks:p3},
+    {n:4,cls:'p4',label:'Phase 4: Growth & Support Resources',sub:'Ongoing \u00b7 Available anytime',tasks:p4},
+  ];
+
+  T={};
+  var html='';
+  phases.forEach(function(ph){
+    html+='<div class="phb"><div class="phh"><div class="phn '+ph.cls+'">'+ph.n+'</div><div class="phtw"><strong>'+ph.label+'</strong><span>'+ph.sub+'</span></div></div>';
+    if(ph.n===4){
+      html+='<div class="dnote-blue"><span>&#128161;</span><div>These resources are available anytime -- most valuable in your first 90 days of operation. No prerequisites required.</div></div>';
+    } else if(ph.n>1){
+      html+='<div class="wbox">&#9888;&#65039; Complete Phase '+(ph.n-1)+' before starting these steps.</div>';
+    }
+    ph.tasks.forEach(function(t){
+      var isP4=ph.n===4;
+      T[t.id]=false;
+      html+='<div class="task" id="tk-'+t.id+'" onclick="toggleT(\''+t.id+'\')">'
+        +'<div class="tchk"><svg class="tsvg" width="10" height="8" fill="none" viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'
+        +'<div class="tbody"><div class="tn">'+esc(t.name)+'</div><div class="td">'+esc(t.desc)+'</div>'
+        +'<div class="tft"><a class="tl'+(isP4?' blue':'')+'" href="'+t.url+'" onclick="openLink(this.href);return false;">'+esc(t.lbl)+' &rarr;</a><span class="tc">'+esc(t.cost)+'</span></div></div>'
+        +'<div class="tbdg">'+esc(t.time)+'</div></div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('cl-body').innerHTML=html;
+
+  document.getElementById('dept-grid').innerHTML=[
+    {i:'&#127974;',n:'Finance (BPOL)',url:'https://www.rva.gov/finance',u:'rva.gov/finance'},
+    {i:'&#128506;',n:'Planning & Dev.',url:'https://www.rva.gov/planning-development-review',u:'rva.gov/planning'},
+    {i:'&#129309;',n:'Minority Business',url:'https://www.rva.gov/minority-business',u:'rva.gov/minority-business'},
+    {i:'&#128200;',n:'Economic Dev.',url:'https://www.richmondeda.org',u:'richmondeda.org'},
+    {i:'&#128274;',n:'EnerGov Permits',url:'https://energov.richmondgov.com',u:'energov.richmondgov.com'},
+    {i:'&#128506;',n:'Richmond Zoning Map',url:ATLAS_BASE,u:'Atlas.co'},
+    {i:'&#127482;&#127480;',n:'SAM.gov',url:'https://sam.gov',u:'sam.gov'},
+    {i:'&#127760;',n:'eVA Virginia',url:'https://eva.virginia.gov',u:'eva.virginia.gov'},
+    {i:'&#128161;',n:'SCORE Richmond',url:'https://richmond.score.org',u:'richmond.score.org'},
+    {i:'&#127885;',n:'SWaM (DSBSD)',url:'https://www.sbsd.virginia.gov',u:'sbsd.virginia.gov'},
+  ].map(function(d){
+    return '<a href="'+d.url+'" onclick="openLink(this.href);return false;" class="dc"><div class="di">'+d.i+'</div><div class="dn2">'+d.n+'</div><div class="du">'+d.u+'</div></a>';
+  }).join('');
+
+  updateProg();
+  refreshDash();
+}
+
+// ===================================================
+// OPPORTUNITY TABS
+// ===================================================
+function showOppTab(tab){
+  ['rva','sam','eva'].forEach(function(t){
+    var p=document.getElementById('panel-'+t);
+    var b=document.getElementById('tab-'+t);
+    if(p)p.style.display=t===tab?'block':'none';
+    if(b)b.classList.toggle('on',t===tab);
+  });
+}
+async function loadRVA(){
+  var status=document.getElementById('rva-status');
+  var tbody=document.getElementById('rva-tbody');
+  var countEl=document.getElementById('rva-count');
+  if(status){status.style.display='block';status.style.background='#EFF6FF';status.style.border='1px solid #BFDBFE';status.style.color='#1E40AF';status.innerHTML='Fetching Richmond City Contracts from data.richmondgov.com...';}
+  if(tbody)tbody.innerHTML='<tr><td colspan="7" style="padding:32px;text-align:center;color:var(--muted);">Loading live data...</td></tr>';
+  try{
+    // Exact query matching rva_contracts_apicall.py:
+    // Fields: agency_department, contract_number, contract_value, supplier, description, effective_from, effective_to
+    // Filter: contract_value IS NOT NULL
+    // Order:  contract_value DESC (highest value first)
+    // Limit:  100
+    var params = new URLSearchParams({
+      '$select': 'agency_department,contract_number,contract_value,supplier,description,effective_from,effective_to',
+      '$where':  'contract_value IS NOT NULL',
+      '$order':  'contract_value DESC',
+      '$limit':  '5000'
+    });
+    var url='https://data.richmondgov.com/resource/xqn7-jvv2.json?'+params.toString();
+    var res=await fetch(url,{headers:{'Accept':'application/json'}});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    var data=await res.json();
+    if(!data||!data.length)throw new Error('No records returned');
+    RVA_ALL=data;
+    if(countEl)countEl.textContent=data.length.toLocaleString()+'+';
+    if(status){
+      status.style.background='#ECFDF5';status.style.border='1px solid #A7F3D0';status.style.color='#065F46';
+      status.innerHTML='&#10003; Loaded <strong>'+data.length.toLocaleString()+'</strong> Richmond City contracts (up to 5,000) &bull; Sorted by contract value (highest first) &bull; Source: data.richmondgov.com &bull; Dataset xqn7-jvv2';
+    }
+    renderRVA(data);
+    populateDeptDropdown(data);
+  }catch(err){
+    if(status){status.style.background='#FFF7ED';status.style.border='1px solid #FED7AA';status.style.color='#9A3412';status.innerHTML='Could not load live data: '+esc(err.message)+'. <a href="https://data.richmondgov.com/Well-Managed-Government/City-Contracts/xqn7-jvv2" onclick="openLink(this.href);return false;" style="color:#9A3412;font-weight:600;">View dataset directly &rarr;</a>';}
+    if(tbody)tbody.innerHTML='<tr><td colspan="7" style="padding:32px;text-align:center;color:var(--muted);">Could not load data. <a href="https://data.richmondgov.com/Well-Managed-Government/City-Contracts/xqn7-jvv2" onclick="openLink(this.href);return false;" style="color:var(--red);">View dataset directly &rarr;</a></td></tr>';
+    if(countEl)countEl.textContent='Err';
+  }
+}
+
+function renderRVA(data){
+  var tbody=document.getElementById('rva-tbody');
+  var showing=document.getElementById('rva-showing');
+  if(!tbody)return;
+  if(!data||!data.length){
+    tbody.innerHTML='<tr><td colspan="7" style="padding:32px;text-align:center;color:var(--muted);">No matching contracts found.</td></tr>';
+    if(showing)showing.textContent='0 contracts';
+    return;
+  }
+  var defaultUrl='https://data.richmondgov.com/Well-Managed-Government/City-Contracts/xqn7-jvv2';
+  tbody.innerHTML=data.map(function(r){
+    // Exact fields from rva_contracts_apicall.py
+    var contractNum=r.contract_number||'--';
+    var desc=r.description||'--';
+    var supplier=r.supplier||'--';
+    var dept=r.agency_department||'--';
+    var valRaw=r.contract_value||'';
+    var effFrom=r.effective_from||'';
+    var effTo=r.effective_to||'';
+    var valStr='--';
+    if(valRaw){var n=parseFloat(String(valRaw).replace(/[$,]/g,''));valStr=isNaN(n)?String(valRaw):'$'+n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
+    function fmtDate(d){if(!d)return'--';try{return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch(e){return String(d).slice(0,10);}}
+    var safeUrl=esc(defaultUrl);
+    var idDisplay=String(contractNum).length>18?String(contractNum).slice(0,16)+'...':contractNum;
+    return '<tr class="rva-row" data-href="'+safeUrl+'" style="cursor:pointer;transition:background .12s;">'
+      +'<td style="padding:10px 12px;border-bottom:1px solid var(--light);white-space:nowrap;"><span style="font-family:DM Mono,monospace;font-size:10px;font-weight:700;color:var(--tl);background:#E1F5EE;padding:3px 8px;border-radius:4px;border:1px solid #9FE1CB;">'+esc(idDisplay)+'</span></td>'
+      +'<td style="padding:10px 12px;border-bottom:1px solid var(--light);max-width:240px;"><div style="font-size:12px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+esc(desc)+'">'+esc(String(desc).slice(0,70))+(desc.length>70?'...':'')+'</div></td>'
+      +'<td style="padding:10px 12px;border-bottom:1px solid var(--light);font-size:12px;color:var(--text);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(String(supplier).slice(0,32))+'</td>'
+      +'<td style="padding:10px 12px;border-bottom:1px solid var(--light);font-size:11px;color:var(--muted);white-space:nowrap;">'+esc(String(dept).slice(0,28))+'</td>'
+      +'<td style="padding:10px 12px;border-bottom:1px solid var(--light);text-align:right;font-family:DM Mono,monospace;font-size:12px;font-weight:700;color:var(--tl);white-space:nowrap;">'+esc(valStr)+'</td>'
+      +'<td style="padding:10px 12px;border-bottom:1px solid var(--light);font-size:11px;color:var(--muted);white-space:nowrap;">'+esc(fmtDate(effFrom))+'</td>'
+      +'<td style="padding:10px 12px;border-bottom:1px solid var(--light);font-size:11px;color:var(--muted);white-space:nowrap;">'+esc(fmtDate(effTo))+'</td>'
+      +'</tr>';
+  }).join('');
+  if(showing)showing.textContent='Showing '+data.length.toLocaleString()+' of up to 5,000 contracts &bull; sorted by contract value, highest first';
+}
+
+function filterRVA(){
+  var kw=(document.getElementById('rva-search')||{value:''}).value.toLowerCase().trim();
+  var dept=(document.getElementById('rva-cat')||{value:''}).value; // exact dept name, not lowercased
+  if(!RVA_ALL.length){loadRVA();return;}
+  var f=RVA_ALL.filter(function(r){
+    var txt=[r.contract_number||'',r.description||'',r.supplier||'',r.agency_department||''].join(' ').toLowerCase();
+    var kwOk=!kw||txt.includes(kw);
+    var deptOk=!dept||(r.agency_department||'')=== dept;
+    return kwOk&&deptOk;
+  });
+  renderRVA(f);
+}
+
+// Populate department dropdown from loaded data
+function populateDeptDropdown(data){
+  var sel=document.getElementById('rva-cat');
+  if(!sel||!data||!data.length)return;
+  // Collect unique departments, sorted
+  var depts={};
+  data.forEach(function(r){
+    var d=r.agency_department||'';
+    if(d)depts[d]=(depts[d]||0)+1;
+  });
+  var sorted=Object.keys(depts).sort();
+  // Keep existing "All Departments" option, remove any old dept options
+  while(sel.options.length>1)sel.remove(1);
+  sorted.forEach(function(d){
+    var opt=document.createElement('option');
+    opt.value=d;
+    opt.text=d+' ('+depts[d]+')';
+    sel.add(opt);
+  });
+}
+
+// ===================================================
+// SAM.GOV SEARCH (opens browser)
+// ===================================================
+function openSAMSearch(){
+  var kw=(document.getElementById('sam-kw')||{value:''}).value.trim();
+  var sa=(document.getElementById('sam-sa')||{value:''}).value;
+  var base='https://sam.gov/search/?index=opp&is_active=true&sort=-modifiedDate&location=Virginia';
+  if(kw)base+='&keywords='+encodeURIComponent(kw);
+  if(sa)base+='&typeOfSetAside='+encodeURIComponent(sa);
+  openLink(base);
+}
+
+// ===================================================
+// DASHBOARD
+// ===================================================
+var SESSION_LOG=[];
+function refreshDash(){
+  // Store anonymized session data &#8212; no PII, only business type/location/industry/language
+  SESSION_LOG.push({
+    d:          new Date().toLocaleDateString(),
+    q1:         S.q1, q2: S.q2, q3: S.q3,
+    lang:       LANG.toUpperCase(),
+    tasks_done: Object.values(T).filter(Boolean).length,
+    tasks_total:Object.keys(T).length
+  });
+  var ds=document.getElementById('d-sess');if(ds)ds.textContent=(247+SESSION_LOG.length).toLocaleString();
+  var dc=document.getElementById('d-chk');if(dc)dc.textContent=(189+SESSION_LOG.length).toLocaleString();
+  renderDash();
+}
+function renderDash(){
+  var tb=document.getElementById('dash-tbody');if(!tb)return;
+
+  // Base anonymized seed data (represents prior sessions &#8212; no PII)
+  var seed=[
+    ['Mar 28, 2026','LLC / Corporation','Professional Services','Home-Based','EN','72%'],
+    ['Mar 28, 2026','Sole Proprietorship','Retail / Food','Commercial Space','ES','55%'],
+    ['Mar 28, 2026','LLC / Corporation','Trades / Construction','Commercial Space','EN','89%'],
+    ['Mar 27, 2026','Partnership','Creative / Arts','Online','ES','21%'],
+    ['Mar 27, 2026','LLC / Corporation','Professional Services','Commercial Space','EN','100%'],
+    ['Mar 27, 2026','Sole Proprietorship','Retail / Food','Home-Based','ES','43%'],
+    ['Mar 26, 2026','Nonprofit','Other','Online','EN','34%'],
+    ['Mar 26, 2026','LLC / Corporation','Childcare / Health','Commercial Space','EN','67%'],
+    ['Mar 26, 2026','Sole Proprietorship','Trades / Construction','Renovating','EN','78%'],
+    ['Mar 25, 2026','Partnership','Professional Services','Commercial Space','ES','91%'],
+    ['Mar 25, 2026','LLC / Corporation','Creative / Arts','Home-Based','EN','45%'],
+    ['Mar 25, 2026','Sole Proprietorship','Childcare / Health','Home-Based','ES','100%'],
+    ['Mar 24, 2026','Nonprofit','Other','Online','EN','28%'],
+    ['Mar 24, 2026','LLC / Corporation','Retail / Food','Commercial Space','EN','63%'],
+    ['Mar 24, 2026','Sole Proprietorship','Professional Services','Online','ES','50%'],
+    ['Mar 23, 2026','LLC / Corporation','Trades / Construction','Renovating','EN','95%'],
+    ['Mar 23, 2026','Partnership','Creative / Arts','Commercial Space','EN','37%'],
+    ['Mar 23, 2026','Sole Proprietorship','Retail / Food','Commercial Space','ES','82%'],
+    ['Mar 22, 2026','LLC / Corporation','Professional Services','Home-Based','EN','60%'],
+    ['Mar 22, 2026','Nonprofit','Childcare / Health','Commercial Space','EN','100%'],
+    ['Mar 22, 2026','Sole Proprietorship','Other','Online','ES','15%'],
+    ['Mar 21, 2026','LLC / Corporation','Retail / Food','Commercial Space','EN','74%'],
+    ['Mar 21, 2026','Partnership','Trades / Construction','Renovating','EN','88%'],
+    ['Mar 21, 2026','Sole Proprietorship','Professional Services','Home-Based','ES','56%'],
+    ['Mar 20, 2026','LLC / Corporation','Creative / Arts','Online','EN','42%'],
+    ['Mar 20, 2026','Sole Proprietorship','Childcare / Health','Commercial Space','EN','100%'],
+    ['Mar 19, 2026','LLC / Corporation','Professional Services','Commercial Space','EN','69%'],
+    ['Mar 19, 2026','Nonprofit','Other','Online','ES','33%'],
+    ['Mar 18, 2026','Sole Proprietorship','Retail / Food','Home-Based','EN','77%'],
+    ['Mar 18, 2026','LLC / Corporation','Trades / Construction','Renovating','EN','85%'],
+    ['Mar 17, 2026','Partnership','Professional Services','Commercial Space','ES','92%'],
+    ['Mar 17, 2026','Sole Proprietorship','Creative / Arts','Online','EN','48%'],
+    ['Mar 16, 2026','LLC / Corporation','Retail / Food','Commercial Space','EN','61%'],
+    ['Mar 16, 2026','Nonprofit','Childcare / Health','Online','ES','100%'],
+    ['Mar 15, 2026','Sole Proprietorship','Professional Services','Home-Based','EN','53%'],
+    ['Mar 15, 2026','LLC / Corporation','Trades / Construction','Commercial Space','EN','79%'],
+    ['Mar 14, 2026','Partnership','Other','Online','ES','27%'],
+    ['Mar 14, 2026','LLC / Corporation','Retail / Food','Commercial Space','EN','66%'],
+    ['Mar 13, 2026','Sole Proprietorship','Professional Services','Home-Based','ES','84%'],
+    ['Mar 13, 2026','LLC / Corporation','Creative / Arts','Commercial Space','EN','40%'],
+    ['Mar 12, 2026','Nonprofit','Other','Online','EN','22%'],
+    ['Mar 12, 2026','LLC / Corporation','Childcare / Health','Home-Based','EN','100%'],
+    ['Mar 11, 2026','Sole Proprietorship','Trades / Construction','Renovating','EN','93%'],
+    ['Mar 11, 2026','Partnership','Professional Services','Commercial Space','ES','71%'],
+    ['Mar 10, 2026','LLC / Corporation','Retail / Food','Commercial Space','EN','58%'],
+  ];
+
+  // Prepend any real-time checklist completions from this session (no PII &#8212; type/industry/location/lang only)
+  SESSION_LOG.forEach(function(entry){
+    var pct=entry.tasks_total>0?Math.round(entry.tasks_done/entry.tasks_total*100)+'%':'0%';
+    seed.unshift([entry.d, entry.q1||'--', entry.q3||'--', entry.q2||'--', entry.lang||'EN', pct]);
+  });
+
+  // Also prepend current in-progress session if quiz completed
+  if(S.q1){
+    var cur_pct=Object.keys(T).length?Math.round(Object.values(T).filter(Boolean).length/Math.max(1,Object.keys(T).length)*100)+'%':'0%';
+    seed.unshift([new Date().toLocaleDateString(),S.q1||'--',S.q3||'--',S.q2||'--',LANG.toUpperCase(),cur_pct]);
+  }
+
+  // Show ALL rows &#8212; no limit &#8212; wrapped in a scrollable container
+  // Update row count display
+  var rowCount = document.getElementById('dash-row-count');
+  if(rowCount) rowCount.textContent = seed.length + ' sessions';
+
+  tb.innerHTML = seed.map(function(r){
+    var isLive = r === seed[0] && S.q1;
+    var rowStyle = isLive ? 'background:#F0FDF4;' : '';
+    return '<tr style="'+rowStyle+'">'
+      + r.map(function(c,i){
+          var style = 'font-size:12px;padding:9px 12px;border-bottom:1px solid var(--light);';
+          if(i===5) style += 'font-family:DM Mono,monospace;color:var(--tl);font-weight:600;';
+          if(i===4) style += 'font-weight:600;color:'+(c==='ES'?'var(--sp)':'var(--muted)')+';';
+          return '<td style="'+style+'">'+esc(c)+'</td>';
+        }).join('')
+      + '</tr>';
+  }).join('');
+}
+
+// ===================================================
+// MODALS
+// ===================================================
+var MODALS={
+  appt:{title:'Contact City of Richmond',body:'<p style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:10px;">Call <a href="tel:8046467000" style="color:var(--red);font-weight:700;text-decoration:none;">804-646-7000</a> or <a href="tel:311" style="color:var(--red);font-weight:700;text-decoration:none;">3-1-1</a></p><p style="color:#666;margin-bottom:16px;font-size:13px;">Richmond main citizen service line. Hours: Monday-Friday, 8 a.m.-5 p.m.</p><hr style="border:none;border-top:1px solid #eee;margin:14px 0"><p style="margin-bottom:10px;font-size:13px;"><strong>Finance Dept (BPOL)</strong><br>(804) 646-7000 &bull; 900 E. Broad St., Suite 100<br><a href="https://www.rva.gov/finance" onclick="openLink(this.href);return false;" style="color:var(--red)">rva.gov/finance</a></p><p style="margin-bottom:10px;font-size:13px;"><strong>Planning &amp; Development Review</strong><br>(804) 646-6304 &bull; 900 E. Broad St., Suite 511<br><a href="https://www.rva.gov/planning-development-review" onclick="openLink(this.href);return false;" style="color:var(--red)">rva.gov/planning-development-review</a></p><p style="font-size:13px;"><strong>Minority Business Development</strong><br>(804) 646-3985<br><a href="https://www.rva.gov/minority-business" onclick="openLink(this.href);return false;" style="color:var(--red)">rva.gov/minority-business</a></p>'},
+  mbd:{title:'Minority Business Development Office',body:'<p style="font-size:13px;line-height:1.7;color:#555;">The City of Richmond MBD Office supports minority and women-owned businesses (MBE/WBE):</p><ul style="padding-left:18px;line-height:2.2;margin-top:10px;font-size:13px;color:#555;"><li>MBE/WBE Certification support</li><li>City procurement navigation &amp; vendor portal guidance</li><li>SAM.gov and eVA Virginia registration help</li><li>SWaM certification assistance</li><li>Technical assistance &amp; networking events</li></ul><p style="margin-top:14px;font-size:13px;"><a href="https://www.rva.gov/minority-business" onclick="openLink(this.href);return false;" style="color:var(--red);font-weight:600;">rva.gov/minority-business</a><br>Phone: (804) 646-3985</p>'},
+  score:{title:'Free SCORE Mentoring -- Richmond Chapter',body:'<p style="font-size:13px;line-height:1.7;color:#555;">Free mentoring from experienced business executives (SBA-backed). No cost, no obligation.</p><ul style="padding-left:18px;line-height:2.2;margin-top:10px;font-size:13px;color:#555;"><li>One-on-one mentoring (in-person or virtual)</li><li>Business plan review &amp; financial planning</li><li>Government contracting &amp; SAM.gov guidance</li><li>Marketing &amp; growth strategy workshops</li></ul><p style="margin-top:14px;font-size:13px;"><a href="https://richmond.score.org" onclick="openLink(this.href);return false;" style="color:var(--red);font-weight:600;">richmond.score.org</a></p>'}
+};
+function openM(key){
+  var m=MODALS[key];if(!m)return;
+  document.getElementById('m-tit').textContent=m.title;
+  document.getElementById('m-bdy').innerHTML=m.body;
+  document.getElementById('mov').classList.add('open');
+}
+function closeM(e){
+  if(!e||e.target===document.getElementById('mov'))
+    document.getElementById('mov').classList.remove('open');
+}
+
+// ===================================================
+// HELPERS
+// ===================================================
+function esc(s){
+  if(!s)return'';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Delegated click for dynamically rendered table rows
+document.addEventListener('click',function(e){
+  var row=e.target.closest('.rva-row');
+  if(row&&row.dataset.href){openLink(row.dataset.href);}
+});
+
+// ===================================================
+// EXPOSE ALL FUNCTIONS TO GLOBAL SCOPE
+// Required for inline onclick="" handlers
+// ===================================================
+
+window.goTo         = goTo;
+window.setLang      = setLang;
+window.pick         = pick;
+window.showQ        = showQ;
+window.nextQ        = nextQ;
+window.build        = build;
+window.toggleT      = toggleT;
+window.openM        = openM;
+window.closeM       = closeM;
+window.showTLD               = showTLD;
+window.openLink              = openLink;
+window.showOppTab            = showOppTab;
+window.openSAMSearch         = openSAMSearch;
+window.loadRVA               = loadRVA;
+window.filterRVA             = filterRVA;
+window.oppTabInit            = oppTabInit;
+window.populateDeptDropdown  = populateDeptDropdown;
+window.buildCost             = buildCost;
+window.buildTimeline         = buildTimeline;
+window.updateProg            = updateProg;
+</script>
+</body>
+</html>
