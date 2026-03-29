@@ -49,6 +49,14 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     Routes requests based on HTTP method and path.
     """
     try:
+        # Check if this is a Lex V2 fulfillment invocation (Lex calls Lambda directly)
+        if "sessionState" in event and "inputTranscript" in event:
+            return handle_lex_fulfillment(event)
+
+        # Check if this is an Amazon Connect invocation
+        if "Details" in event and "ContactData" in event.get("Details", {}):
+            return handle_connect_call(event)
+
         http_method = event.get("httpMethod", "POST")
         path = event.get("path", "/chat")
 
@@ -79,6 +87,158 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     except Exception as e:
         print(f"Error in orchestrator: {str(e)}")
         return error_response(str(e), 500)
+
+
+LANGUAGE_MAP = {
+    "en_US": {"code": "en", "name": "English", "greeting": "I'm ready to help you with Richmond city services. What do you need assistance with today?"},
+    "es_US": {"code": "es", "name": "Spanish", "greeting": "Estoy listo para ayudarle con los servicios de la ciudad de Richmond. ¿En qué puedo ayudarle hoy?"},
+    "ar_001": {"code": "ar", "name": "Arabic", "greeting": "أنا مستعد لمساعدتك في خدمات مدينة ريتشموند. كيف يمكنني مساعدتك اليوم؟"},
+}
+
+
+def handle_lex_fulfillment(event: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Handle Lex V2 fulfillment invocations.
+    When Lex calls Lambda directly, inputTranscript is reliably populated.
+    Detects language from Lex locale and instructs Claude to respond accordingly.
+    Returns a Lex V2 response with the AI answer in sessionAttributes.
+    """
+    try:
+        print(f"LEX FULFILLMENT EVENT: {json.dumps(event, default=str)}")
+
+        user_message = event.get("inputTranscript", "").strip()
+        intent_name = event.get("sessionState", {}).get("intent", {}).get("name", "")
+        session_id = event.get("sessionId", str(uuid.uuid4()))
+        session_attrs = event.get("sessionState", {}).get("sessionAttributes", {}) or {}
+
+        # Detect language: first check Lex locale, then auto-detect from text
+        bot_locale = event.get("bot", {}).get("localeId", "en_US")
+        lang_info = LANGUAGE_MAP.get(bot_locale, LANGUAGE_MAP["en_US"])
+        language = lang_info["code"]
+
+        # Auto-detect Spanish if using English Lex locale (single-bot approach)
+        if language == "en" and user_message:
+            try:
+                detect_resp = comprehend_client.detect_dominant_language(Text=user_message)
+                detected_langs = detect_resp.get("Languages", [])
+                if detected_langs:
+                    top_lang = detected_langs[0]["LanguageCode"]
+                    confidence = detected_langs[0]["Score"]
+                    if top_lang == "es" and confidence > 0.5:
+                        language = "es"
+                        lang_info = LANGUAGE_MAP["es_US"]
+                        print(f"Auto-detected Spanish (confidence={confidence:.2f})")
+            except Exception as lang_err:
+                print(f"Language detection failed, defaulting to English: {lang_err}")
+
+        print(f"Lex fulfillment: intent={intent_name}, transcript='{user_message}', session={session_id}, locale={bot_locale}, language={language}")
+
+        if not user_message:
+            response_text = lang_info["greeting"]
+        else:
+            # Process through the same RAG pipeline
+            init_session(session_id, language, "general")
+            retrieval_results = retrieve_from_kb(user_message)
+            response_text = generate_response(user_message, retrieval_results, session_id, [], language=language)
+
+            # Truncate for TTS
+            if len(response_text) > 3000:
+                response_text = response_text[:2950] + "... For more details, please visit our website."
+
+        # Store response in session attributes so Connect flow can read it
+        session_attrs["aiResponse"] = response_text
+
+        # Return Lex V2 fulfillment response
+        # Use ElicitIntent so Lex plays the message (with barge-in) then keeps listening
+        # The caller can interrupt the response at any time by speaking
+        return {
+            "sessionState": {
+                "dialogAction": {
+                    "type": "ElicitIntent"
+                },
+                "sessionAttributes": session_attrs
+            },
+            "messages": [
+                {
+                    "contentType": "PlainText",
+                    "content": response_text
+                }
+            ]
+        }
+
+    except Exception as e:
+        print(f"Error in handle_lex_fulfillment: {str(e)}")
+        error_msg = "I apologize, I'm having trouble right now. Please try again or call 311 during business hours."
+        return {
+            "sessionState": {
+                "dialogAction": {"type": "ElicitIntent"},
+                "sessionAttributes": {"aiResponse": error_msg}
+            },
+            "messages": [{"contentType": "PlainText", "content": error_msg}]
+        }
+
+
+def handle_connect_call(event: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Handle Amazon Connect IVR invocations.
+    Connect sends the Lex InputTranscript in the event parameters.
+    Returns a response dict that Connect uses to play back via TTS.
+    """
+    try:
+        # Log the full event for debugging
+        print(f"CONNECT EVENT: {json.dumps(event, default=str)}")
+
+        details = event.get("Details", {})
+        contact_data = details.get("ContactData", {})
+        parameters = details.get("Parameters", {})
+        attributes = contact_data.get("Attributes", {})
+
+        # Log all possible locations where transcript might be
+        print(f"Parameters: {json.dumps(parameters, default=str)}")
+        print(f"Attributes: {json.dumps(attributes, default=str)}")
+
+        # Get user's spoken input - check all possible locations
+        user_message = (
+            parameters.get("InputTranscript", "")
+            or parameters.get("inputTranscript", "")
+            or attributes.get("userMessage", "")
+            or attributes.get("InputTranscript", "")
+            or parameters.get("utterance", "")
+            or attributes.get("utterance", "")
+            # Lex slots and intent info
+            or parameters.get("Lex", {}).get("InputTranscript", "") if isinstance(parameters.get("Lex"), dict) else ""
+        )
+        if isinstance(user_message, str):
+            user_message = user_message.strip()
+        else:
+            user_message = ""
+
+        if not user_message:
+            print(f"WARNING: No user message found in event. Full event keys: {list(event.keys())}")
+            print(f"Details keys: {list(details.keys())}")
+            return {"response": "I'm ready to help you with Richmond city services. What do you need assistance with today?"}
+
+        # Use contact ID as session ID for Connect calls
+        session_id = contact_data.get("ContactId", str(uuid.uuid4()))
+        language = attributes.get("language", "en")
+        category = attributes.get("category", "general")
+
+        print(f"Connect call: session={session_id}, message={user_message}, language={language}")
+
+        # Process through the same RAG pipeline as web chat
+        init_session(session_id, language, category)
+        retrieval_results = retrieve_from_kb(user_message)
+        response_text = generate_response(user_message, retrieval_results, session_id, [])
+
+        # Truncate for TTS (Connect has limits on prompt length)
+        if len(response_text) > 3000:
+            response_text = response_text[:2950] + "... For more details, please visit our website at d3rgw4i46ms5xk.cloudfront.net."
+
+        return {"response": response_text}
+
+    except Exception as e:
+        print(f"Error in handle_connect_call: {str(e)}")
+        return {"response": "I apologize, I'm having trouble processing your request. Please try again or call 311 during business hours."}
 
 
 def handle_chat(event: Dict[str, Any]) -> Dict[str, Any]:
@@ -504,15 +664,22 @@ def retrieve_from_kb(query: str) -> Dict[str, Any]:
 
 
 def generate_response(
-    user_input: str, retrieval_results: Dict[str, Any], session_id: str, history: list = None
+    user_input: str, retrieval_results: Dict[str, Any], session_id: str, history: list = None, language: str = "en"
 ) -> str:
     """
     Generate response using Claude Haiku 4.5 with retrieved context and conversation history.
-    Includes privacy notice and source citations.
+    Includes privacy notice, source citations, and multilingual support.
     """
     try:
         context = retrieval_results.get("context", "")
         sources = retrieval_results.get("sources", [])
+
+        # Language instruction for non-English responses
+        language_instruction = ""
+        if language == "es":
+            language_instruction = "\n\nIMPORTANT: You MUST respond entirely in Spanish. The caller speaks Spanish. Translate all resource names, instructions, and guidance into Spanish. Keep proper nouns (organization names, addresses, phone numbers) in their original form."
+        elif language == "ar":
+            language_instruction = "\n\nIMPORTANT: You MUST respond entirely in Arabic. The caller speaks Arabic. Translate all resource names, instructions, and guidance into Arabic. Keep proper nouns (organization names, addresses, phone numbers) in their original form."
 
         # Build system prompt
         system_prompt = f"""You are a compassionate Richmond City 24/7 Resource Assistant.
@@ -522,6 +689,7 @@ IMPORTANT: You MUST only use the knowledge base context provided. Do not make up
 Be empathetic, clear, and actionable in your responses.
 When providing information, cite the document sources.
 If you don't know something or the knowledge base doesn't cover it, be honest and suggest contacting local non-profit organizations.
+{language_instruction}
 
 Privacy Notice:
 {PRIVACY_NOTICE}
