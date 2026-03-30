@@ -8,6 +8,8 @@
 
 RVA 311 Bridge extends Richmond's 311 system to provide **24/7 after-hours assistance** through an AI-powered chatbot and IVR phone line. Residents can report issues, find city resources, and get connected to the right department — in **English, Spanish, and Arabic** — without needing an account or sharing personal information.
 
+**Video Demo: https://www.youtube.com/watch?v=8kAJSivFeRg**
+
 **🌐 Live Demo:** [https://d3rgw4i46ms5xk.cloudfront.net](https://d3rgw4i46ms5xk.cloudfront.net)
 
 **:phone: Live VOICE IVR: 1-855-953-7650**
